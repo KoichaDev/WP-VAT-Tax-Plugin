@@ -25,3 +25,5 @@
 if (!defined('ABSPATH')) {
     exit;
 }
+
+include_once('inc/custom-post-types/cpt_form_calculation.php');
