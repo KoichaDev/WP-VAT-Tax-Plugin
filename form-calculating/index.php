@@ -27,3 +27,9 @@ if (!defined('ABSPATH')) {
 }
 
 include_once('inc/custom-post-types/cpt_form_calculation.php');
+
+include_once('inc/custom-plugin/menu_dashboard.php');
+
+include_once('inc/enqueue-style-and-scripts/enqueue_react_script.php');
+
+include_once('inc/shortcodes/cost-calculator.php');
