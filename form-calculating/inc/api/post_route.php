@@ -10,14 +10,15 @@ function post_route_api() {
 function post_result($data) {
     $post_id = wp_insert_post([
         'post_type'     => 'cpt-form-calculation',
-        'post_status'  => 'publish',
+        'post_status'   => 'publish',
     ]);
 
     $updated_fields = [
+        'id'             => $data['id'],
         'product_name'   => $data['product-name'],
         'net_amount'     => $data['net-amount'],
         'vat_rate'       => $data['vat-rate'],
-        'currency'      => $data['currency'],
+        'currency'       => $data['currency'],
     ];
 
     foreach ($updated_fields as $field_selector => $field_value) {

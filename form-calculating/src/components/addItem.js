@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import './Form.scss';
 
-function Form({ onAddItem }) {
+function AddItem({ onAddItem }) {
   const [productName, setProductName] = useState('');
   const [netAmount, setNetAmount] = useState('');
   const [vatRate, setVatRate] = useState(25);
@@ -83,4 +83,4 @@ function Form({ onAddItem }) {
   );
 }
 
-export default Form;
+export default AddItem;
