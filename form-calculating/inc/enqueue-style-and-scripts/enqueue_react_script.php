@@ -26,10 +26,12 @@ function enqueue_react_script() {
         // Load regular JavaScript with the React 
         wp_enqueue_style('style-sheet', $file_to_css, [], $file_version, 'all');
         wp_enqueue_script('react-script', $file_to_js, [], $file_version, false);
+
+        wp_localize_script('react-script', 'gsReactScript', [
+            'url' => get_site_url(), // Returns the URL of the current WP installation address
+            'nonce' => wp_create_nonce('wp_rest') // WP will give user ID to check if the user is logged in or not, so we can perform CRUD operation
+        ]);
     }
-
-
-    // wp_enqueue_script('react', get_template_directory_uri() . '/dist/index.js', ['jquery'], filemtime(get_stylesheet_directory() . '/dist/index.js'), false);
 }
 
 add_filter('script_loader_tag', 'script_defer', 10);

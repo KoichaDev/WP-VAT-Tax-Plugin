@@ -1,6 +1,6 @@
 import React from 'react';
 
-function FormResult({ calculateItem }) {
+function ShowItem({ calculateItem }) {
   const lastUpdatedProduct = calculateItem[calculateItem.length - 1];
   const { currency, productName, netAmount, vatRate } = lastUpdatedProduct;
   return (
@@ -23,4 +23,4 @@ function FormResult({ calculateItem }) {
   );
 }
 
-export default FormResult;
+export default ShowItem;
