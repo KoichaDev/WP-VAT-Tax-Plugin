@@ -26,6 +26,10 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+include_once('inc/api/get_route.php');
+
+include_once('inc/api/post_route.php');
+
 include_once('inc/custom-post-types/cpt_form_calculation.php');
 
 include_once('inc/custom-plugin/menu_dashboard.php');

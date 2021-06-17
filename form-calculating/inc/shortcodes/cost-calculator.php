@@ -6,9 +6,10 @@ function shortcode_form_calculation($atts, $content = null) {
         'tip' => 'default',
     ], $atts);
 
+    // Using this div element to "inject" React from the id-attribute as an entry point
     return '<div id="cost-calculator-root"></div>';
 }
 
 
-// will look something like this for shortcode [wpc] 
+// This is a shortcode used to generate [shortcode_form-calculation] 
 add_shortcode('react_form_calculation', 'shortcode_form_calculation');

@@ -15,7 +15,7 @@ function cpt_form_calculation() {
         "public" => true,
         "publicly_queryable" => true,
         "show_ui" => true,
-        "show_in_rest" => false,
+        "show_in_rest" => true,
         "rest_base" => "",
         "rest_controller_class" => "WP_REST_Posts_Controller",
         "has_archive" => true,
