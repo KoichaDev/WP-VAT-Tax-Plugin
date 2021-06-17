@@ -8,19 +8,25 @@ function Form() {
   const [netAmount, setNetAmount] = useState('');
   const [vatRate, setVatRate] = useState(25);
   const [currency, setCurrency] = useState('nok');
-  const [calculateResult, setCalculateResult] = useState([]);
+  const [calculateItem, setCalculateItem] = useState([]);
 
-  const enteredProductHandler = (e) => setProductName(e.target.value);
+  const enteredProductHandler = (e) => setProductName(e.target.value.trim());
 
-  const enteredNetAmountHandler = (e) => setNetAmount(parseInt(e.target.value));
+  const enteredNetAmountHandler = (e) => setNetAmount(parseInt(e.target.value.trim()));
 
   const vatRateHandler = (e) => setVatRate(parseInt(e.target.value));
 
   const currencyHandler = (e) => setCurrency(e.target.value);
 
+  let resultContent = '';
+
+  if (calculateItem.length > 0) {
+    resultContent = <FormResult calculateItem={calculateItem} />;
+  }
+
   const submitHandler = (e) => {
     e.preventDefault();
-    setCalculateResult((prevCalculaterResult) => [
+    setCalculateItem((prevCalculaterResult) => [
       ...prevCalculaterResult,
       {
         id: uuidv4(),
@@ -83,8 +89,7 @@ function Form() {
 
         <button type='submit'>Calculate</button>
       </form>
-
-      <FormResult calculateResult={calculateResult} />
+      {resultContent}
     </>
   );
 }
