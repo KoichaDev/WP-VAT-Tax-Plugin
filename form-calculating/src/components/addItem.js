@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import FormResult from './FormResult';
 import './Form.scss';
 
-function Form() {
+function Form({ onAddItem }) {
   const [productName, setProductName] = useState('');
   const [netAmount, setNetAmount] = useState('');
   const [vatRate, setVatRate] = useState(25);
   const [currency, setCurrency] = useState('nok');
-  const [calculateItem, setCalculateItem] = useState([]);
 
   const enteredProductHandler = (e) => setProductName(e.target.value.trim());
 
@@ -18,24 +16,16 @@ function Form() {
 
   const currencyHandler = (e) => setCurrency(e.target.value);
 
-  let resultContent = '';
-
-  if (calculateItem.length > 0) {
-    resultContent = <FormResult calculateItem={calculateItem} />;
-  }
-
   const submitHandler = (e) => {
     e.preventDefault();
-    setCalculateItem((prevCalculaterResult) => [
-      ...prevCalculaterResult,
-      {
-        id: uuidv4(),
-        productName,
-        netAmount,
-        vatRate,
-        currency,
-      },
-    ]);
+
+    onAddItem({
+      id: uuidv4(),
+      productName,
+      netAmount,
+      vatRate,
+      currency,
+    });
 
     // Reset input field to empty string after submitting the form
     setProductName('');
@@ -89,7 +79,6 @@ function Form() {
 
         <button type='submit'>Calculate</button>
       </form>
-      {resultContent}
     </>
   );
 }
