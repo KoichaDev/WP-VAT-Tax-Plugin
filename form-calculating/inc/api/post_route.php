@@ -29,6 +29,8 @@ function post_result($data) {
         'ID'         => $post_id,
         'post_title' => 'Form Calculation #' . $post_id
     ]);
+
+    return $updated_fields;
 }
 
 add_action('rest_api_init', 'post_route_api');
