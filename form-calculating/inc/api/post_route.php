@@ -1,7 +1,7 @@
 <?php
 function post_route_api() {
 
-    register_rest_route('cpt/v1', 'form-calculation', [
+    register_rest_route('cpt/v1', 'post-form-calculation', [
         'methods' => WP_REST_SERVER::CREATABLE,
         'callback' => 'post_result'
     ]);
@@ -10,21 +10,24 @@ function post_route_api() {
 function post_result($data) {
     $post_id = wp_insert_post([
         'post_type'     => 'cpt-form-calculation',
-        'post_title'    => 'form_calculation',
-        'post_stattus'  => 'publish',
+        'post_status'  => 'publish',
     ]);
 
     $updated_fields = [
-        'productName'   => $data['product-name'],
-        'netAmount'     => $data['net-amount'],
-        'vatRate'       => $data['vat-rate'],
+        'product_name'   => $data['product-name'],
+        'net_amount'     => $data['net-amount'],
+        'vat_rate'       => $data['vat-rate'],
         'currency'      => $data['currency'],
-        'permalink'     => get_post_permalink($post_id),
     ];
 
-    foreach ($updated_fields as $field_seletor => $field_value) {
-        update_field($field_seletor, $field_value, $post_id);
+    foreach ($updated_fields as $field_selector => $field_value) {
+        update_field($field_selector, $field_value, $post_id);
     }
+
+    wp_update_post([
+        'ID'         => $post_id,
+        'post_title' => 'Form Calculation #' . $post_id
+    ]);
 }
 
 add_action('rest_api_init', 'post_route_api');
