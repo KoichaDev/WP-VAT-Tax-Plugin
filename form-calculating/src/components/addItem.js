@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import {
   convertToExchangePrice,
   calculateGrossPrice,
   calculateNetPrice,
   calculateTaxAmount,
 } from '../calculate-items';
-import SortIcon from '../Icons/SortIcon';
+import EqualIcon from './Icons/EqualIcon';
 import currencies from '../currencyExchange.json';
 import './addItem.scss';
 
-function AddItem({ onAddItem }) {
+function AddItem() {
   const [productName, setProductName] = useState('');
   const [netAmountFrom, setNetAmountFrom] = useState('');
   const [netAmountTo, setNetAmountTo] = useState('');
@@ -46,8 +45,15 @@ function AddItem({ onAddItem }) {
 
         setNetAmountTo(newValue.toFixed(2));
       }
+
+      // if (selectedToCurrency === currency) {
+      //   const targetNewCurrency = priceExchange[selectedFromCurrency];
+      //   const newValue = convertToExchangePrice(netAmountFrom, targetNewCurrency);
+
+      //   setNetAmountTo(newValue.toFixed(2));
+      // }
     });
-  }, [netAmountFrom, selectedToCurrency]);
+  }, [netAmountFrom, selectedFromCurrency, selectedToCurrency]);
 
   // useEffect(() => {
   //   // const grossPrice = Number(calculateGrossPrice(netAmount, vatRate)).toFixed(2);
@@ -62,7 +68,9 @@ function AddItem({ onAddItem }) {
 
   const amountFromNetHandler = (e) => setNetAmountFrom(parseFloat(e.target.value));
 
-  const amountToNetHandler = (e) => setNetAmountTo(parseFloat(e.target.value));
+  const amountToNetHandler = (e) => {
+    setNetAmountTo(parseFloat(e.target.value));
+  };
 
   const vatRateHandler = (e) => setVatRate(e.target.value);
 
@@ -70,60 +78,39 @@ function AddItem({ onAddItem }) {
 
   const currencyToHandler = (e) => setSelectedToCurrency(e.target.value);
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-
-    // Lifting up the state
-    onAddItem({
-      id: uuidv4(),
-      productName,
-      // netAmount,
-      grossPrice,
-      netPrice,
-      taxAmount,
-      // currency,
-      vatRate,
-    });
-
-    // Reset input field to empty string after submitting the form
-    setProductName('');
-    // setNetAmount('');
-  };
-
   return (
     <>
-      <form
-        aria-label='Form to calculate the gross amount and tax amount'
-        className='form'
-        onSubmit={submitHandler}>
-        <label htmlFor='product-name' className='form__product-label-from'>
-          Product Name
+      <label htmlFor='product-name' className='form__product-label'>
+        Product Name
+      </label>
+
+      <input
+        type='text'
+        id='product-name'
+        className='form__product-input'
+        placeholder='Enter a product name'
+        onChange={enteredProductHandler}
+        value={productName}
+        required
+      />
+
+      <div style={{ display: 'inline-block' }}>
+        <label htmlFor='net-from-amount' className='form__currency-label'>
+          Current Net Amount
         </label>
         <input
-          type='text'
-          id='product-name-from'
-          className='form__product-input-from'
-          placeholder='Enter a product name'
-          onChange={enteredProductHandler}
-          value={productName}
-          required
-        />
-        <p>Net Amount</p>
-
-        <label htmlFor='net-from-amount' className='form__currency-to'></label>
-        <input
           type='number'
-          id='net-from-amount'
+          id='net-amount'
           value={netAmountFrom}
           onChange={amountFromNetHandler}
           step='0.01'
           required
         />
 
-        <label htmlFor='currency-from' className='form__currency-label-from' />
+        <label htmlFor='current-selected-currency' className='form__currency-label-from' />
         <select
-          id='currency-from'
-          className='form__currency-select-from'
+          id='current-selected-currency'
+          className='form__selected-currency'
           value={selectedFromCurrency}
           onChange={currencyFromHandler}>
           <option value='nok'>NOK</option>
@@ -131,24 +118,37 @@ function AddItem({ onAddItem }) {
           <option value='eur'>EUR</option>
           <option value='usd'>USD</option>
         </select>
+      </div>
 
-        <label htmlFor='net-amount' className='form__currency-input-from' />
+      <EqualIcon
+        className='form__sort-icon'
+        title='Switch currency'
+        ariaLabel='Currency Converted to'
+        title='Currency Converted to'
+      />
 
-        <SortIcon className='form__sort-icon' />
+      <div style={{ display: 'inline-block' }}>
+        <label
+          htmlFor='converted-input-currency'
+          className='form__currency-label'
+          title='Converted Net Amount'>
+          New Target Net Amount
+        </label>
 
         <input
           type='number'
-          id='net-amount'
+          id='converted-input-currency'
           value={netAmountTo}
           onChange={amountToNetHandler}
           step='0.01'
+          readOnly
           required
         />
 
-        <label htmlFor='currency-to' className='form__currency-label-to' />
+        <label htmlFor='convert-selected-currency' className='form__currency-label-from' />
         <select
-          id='currency-to'
-          className='form__currency-input-to'
+          id='convert-selected-currency'
+          className='form__selected-converted-currency'
           value={selectedToCurrency}
           onChange={currencyToHandler}>
           <option value='nok'>NOK</option>
@@ -156,26 +156,20 @@ function AddItem({ onAddItem }) {
           <option value='eur'>EUR</option>
           <option value='usd'>USD</option>
         </select>
+      </div>
 
-        <label htmlFor='vat-rate' className='form__vat-rate-label'>
-          VAT Rate:
-        </label>
-        <select
-          id='form__vat-rate'
-          className='form__vat-rate'
-          value={vatRate}
-          onChange={vatRateHandler}>
-          <option value='25'>25%</option>
-          <option value='23'>23%</option>
-          <option value='22'>22%</option>
-          <option value='8'>8%</option>
-          <option value='7'>7%</option>
-          <option value='5'>5%</option>
-          <option value='0'>0%</option>
-        </select>
-
-        <button type='submit'>Calculate</button>
-      </form>
+      <label htmlFor='vat-rate' className='form__vat-rate-label'>
+        VAT Rate:
+      </label>
+      <select id='form__vat-rate' className='form__vat-rate' value={vatRate} onChange={vatRateHandler}>
+        <option value='25'>25%</option>
+        <option value='23'>23%</option>
+        <option value='22'>22%</option>
+        <option value='8'>8%</option>
+        <option value='7'>7%</option>
+        <option value='5'>5%</option>
+        <option value='0'>0%</option>
+      </select>
     </>
   );
 }

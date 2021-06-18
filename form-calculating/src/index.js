@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import Form from './Form';
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
     <React.StrictMode>
-      <App />
+      <Form />
     </React.StrictMode>,
     document.getElementById('cost-calculator-root')
   );

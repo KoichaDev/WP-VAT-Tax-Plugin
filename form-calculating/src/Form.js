@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import Form from './components/AddItem';
-import FormResult from './components/ShowItem';
+import { v4 as uuidv4 } from 'uuid';
+import AddItem from './components/AddItem';
+import RegisteredItem from './components/RegisteredItem';
 import useHttp from './hooks/use-http';
-import './App.scss';
+import './Form.scss';
 
-function App() {
+function Form() {
   const [calculateItem, setCalculateItem] = useState([]);
   const { isLoading, error, sendRequest: sendItemRequest } = useHttp();
 
@@ -40,20 +41,45 @@ function App() {
 
   let resultContent = '';
 
-  if (calculateItem.length > 0) {
-    resultContent = <FormResult calculateItem={calculateItem} />;
-  }
-
   if (error) {
     resultContent = <p>{error}</p>;
   }
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+
+    // Lifting up the state
+    // onAddItem({
+    //   id: uuidv4(),
+    //   productName,
+    //   // netAmount,
+    //   grossPrice,
+    //   netPrice,
+    //   taxAmount,
+    //   // currency,
+    //   vatRate,
+    // });
+
+    // Reset input field to empty string after submitting the form
+    setProductName('');
+    // setNetAmount('');
+  };
+
   return (
     <>
       <h1>Calculate Tax and Vat</h1>
-      <Form onAddItem={onAddItemHandler} />
-      {resultContent}
+      <form
+        aria-label='Form to calculate the gross amount and tax amount'
+        className='form'
+        onSubmit={submitHandler}>
+        <AddItem />
+        <button type='submit' aria-label='Calculate the item'>
+          Calculate
+        </button>
+      </form>
+      {RegisteredItem}
     </>
   );
 }
 
-export default App;
+export default Form;
