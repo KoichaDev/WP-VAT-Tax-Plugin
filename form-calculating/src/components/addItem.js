@@ -14,16 +14,24 @@ function AddItem({ onAddItem }) {
 
   const enteredProductHandler = (e) => setProductName(e.target.value);
 
-  const enteredNetAmountHandler = (e) => setNetAmount(e.target.value);
+  const enteredNetAmountHandler = (e) => setNetAmount(parseFloat(e.target.value));
 
-  const vatRateHandler = (e) => setVatRate(parseInt(e.target.value));
+  const vatRateHandler = (e) => setVatRate(e.target.value);
 
   const currencyHandler = (e) => setCurrency(e.target.value);
 
   const submitHandler = (e) => {
     e.preventDefault();
 
-    setGrossPrice();
+    const grossPrice = Number(calculateGrossPrice(netAmount, vatRate));
+    const netPrice = Number(calculateNetPrice(grossPrice, vatRate));
+    const taxAmountPrice = Number(calculateTaxAmount(netPrice, vatRate));
+
+    setGrossPrice(grossPrice);
+    setNetPrice(netPrice);
+    setTaxAmount(taxAmountPrice);
+
+    console.log('grossPrice: ', grossPrice, 'netprice: ', netPrice, 'tax amount: ', taxAmountPrice);
 
     onAddItem({
       id: uuidv4(),
