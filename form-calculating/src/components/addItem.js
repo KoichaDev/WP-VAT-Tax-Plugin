@@ -43,17 +43,11 @@ function AddItem({ onAddItem }) {
         // Targeting the currency to exchange from nok to pln for example
         const targetNewCurrency = priceExchange[selectedToCurrency];
         const newValue = convertToExchangePrice(netAmountFrom, targetNewCurrency);
-        setNetAmountTo(newValue.toFixed(2));
 
-        // console.log(priceExchange, selectedFromCurrency);
-        // console.log(currency, priceExchange.selectedFromCurrency);
-        // if (currency) {
-        //   console.log(priceExchange.currency);
-        // }
-        // convertToExchangePrice(netAmountFrom,  ,currency);
+        setNetAmountTo(newValue.toFixed(2));
       }
     });
-  }, [currenciesExchange, netAmountFrom, netAmountTo, selectedToCurrency]);
+  }, [netAmountFrom, selectedToCurrency]);
 
   // useEffect(() => {
   //   // const grossPrice = Number(calculateGrossPrice(netAmount, vatRate)).toFixed(2);
@@ -120,8 +114,8 @@ function AddItem({ onAddItem }) {
         <input
           type='number'
           id='net-from-amount'
-          onChange={amountFromNetHandler}
           value={netAmountFrom}
+          onChange={amountFromNetHandler}
           step='0.01'
           required
         />
@@ -145,7 +139,6 @@ function AddItem({ onAddItem }) {
         <input
           type='number'
           id='net-amount'
-          placeholder=''
           value={netAmountTo}
           onChange={amountToNetHandler}
           step='0.01'
