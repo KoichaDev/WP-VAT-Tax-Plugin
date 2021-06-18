@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { calculateGrossPrice, calculateNetPrice, calculateTaxAmount } from './../calculate-items';
 import './Form.scss';
 
 function AddItem({ onAddItem }) {
@@ -7,10 +8,13 @@ function AddItem({ onAddItem }) {
   const [netAmount, setNetAmount] = useState('');
   const [vatRate, setVatRate] = useState(25);
   const [currency, setCurrency] = useState('nok');
+  const [grossPrice, setGrossPrice] = useState(0);
+  const [netPrice, setNetPrice] = useState(0);
+  const [taxAmount, setTaxAmount] = useState(0);
 
-  const enteredProductHandler = (e) => setProductName(e.target.value.trim());
+  const enteredProductHandler = (e) => setProductName(e.target.value);
 
-  const enteredNetAmountHandler = (e) => setNetAmount(parseInt(e.target.value.trim()));
+  const enteredNetAmountHandler = (e) => setNetAmount(e.target.value);
 
   const vatRateHandler = (e) => setVatRate(parseInt(e.target.value));
 
@@ -18,6 +22,8 @@ function AddItem({ onAddItem }) {
 
   const submitHandler = (e) => {
     e.preventDefault();
+
+    setGrossPrice();
 
     onAddItem({
       id: uuidv4(),
@@ -55,6 +61,7 @@ function AddItem({ onAddItem }) {
           placeholder='Enter number of the net amount'
           onChange={enteredNetAmountHandler}
           value={netAmount}
+          step='0.01'
           required
         />
 
