@@ -16,10 +16,10 @@ function App() {
   };
 
   const onAddItemHandler = async (item) => {
-    const { id, productName, netAmount, vatRate, currency } = item;
+    const { id, productName, netAmount, grossPrice, netPrice, taxAmount, currency, vatRate } = item;
     const baseUrl = gsReactScript.url;
     const nonce = gsReactScript.nonce;
-    const url = `${baseUrl}/wp-json/cpt/v1/post-form-calculation?id=${id}&product-name=${productName}&net-amount=${netAmount}&vat-rate=${vatRate}&currency=${currency}`;
+    const url = `${baseUrl}/wp-json/cpt/v1/post-form-calculation?id=${id}&product-name=${productName}&gross-price=${grossPrice}&net-price=${netPrice}&tax-amount=${taxAmount}%25&net-amount=${netAmount}&vat-rate=${vatRate}%25&currency=${currency}`;
 
     setCalculateItem((prevItem) => [...prevItem, item]);
 

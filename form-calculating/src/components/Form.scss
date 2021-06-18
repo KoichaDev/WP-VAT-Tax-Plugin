@@ -1,13 +1,30 @@
 .form {
   display: block;
 
-  label {
+  select {
+    display: inline-block;
+    margin-left: 4px;
+    margin-bottom: 4px;
+  }
+
+  .form__product-label-from {
     display: block;
   }
 
-  input {
+  .form__product-input-from {
     display: block;
-    width: 50%;
+  }
+
+  .form__sort-icon {
+    margin: 0 1em;
+  }
+
+  .form__vat-rate-label {
+    display: block;
+  }
+
+  .form__vat-rate {
+    display: block;
   }
 
   button {

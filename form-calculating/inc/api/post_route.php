@@ -13,12 +13,15 @@ function post_result($data) {
         'post_status'   => 'publish',
     ]);
 
-    $updated_fields = [
-        'id'             => $data['id'],
-        'product_name'   => $data['product-name'],
-        'net_amount'     => $data['net-amount'],
-        'vat_rate'       => $data['vat-rate'],
-        'currency'       => $data['currency'],
+    $updated_fields['goods'] = [
+        'product_id'            => $data['id'],
+        'product_name'          => $data['product-name'],
+        'gross_product_price'   => $data['gross-price'],
+        'net_amount_price'      => $data['net-amount'],
+        'tax_amount'            => $data['tax-amount'],
+        'vat_rate'              => $data['vat-rate'],
+        'currency_type'         => $data['currency'],
+
     ];
 
     foreach ($updated_fields as $field_selector => $field_value) {
