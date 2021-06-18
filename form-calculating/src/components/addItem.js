@@ -5,10 +5,10 @@ import {
   calculateGrossPrice,
   calculateNetPrice,
   calculateTaxAmount,
-} from './../calculate-items';
-import SortIcon from './../Icons/SortIcon';
-import currencies from './../currencyExchange.json';
-import './Form.scss';
+} from '../calculate-items';
+import SortIcon from '../Icons/SortIcon';
+import currencies from '../currencyExchange.json';
+import './addItem.scss';
 
 function AddItem({ onAddItem }) {
   const [productName, setProductName] = useState('');
