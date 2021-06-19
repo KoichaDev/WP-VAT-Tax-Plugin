@@ -5,7 +5,7 @@ import EqualIcon from '../Icons/EqualIcon';
 import AddProductName from './AddProducItem';
 import AddNetAmountItem from './AddNetAmountItem';
 import AddCurrency from './AddCurrency';
-import NewNetAmountItem from './NewNetAmountItem';
+import FinalNetAmount from './FinalNetAmountItem';
 import VatRateItem from './VatRateItem';
 import currencies from '../../currencyExchange.json';
 import './addItem.scss';
@@ -104,12 +104,20 @@ function AddItem({ onAddItem, onClick }) {
         title='Currency Converted to'
       />
 
-      <NewNetAmountItem
-        inputValue={finalNetAmount}
-        onChangeInputValue={amountToNetHandler}
-        currencyValue={selectedToCurrency}
-        onChangeCurrency={currencyToHandler}
-      />
+      <div style={{ display: 'inline-block' }}>
+        <FinalNetAmount value={finalNetAmount} onChange={amountToNetHandler} />
+
+        <AddCurrency
+          label={{
+            id: 'convert-selected-currency',
+            className: 'form__currency-label-from',
+          }}
+          select={{
+            value: selectedToCurrency,
+            onChange: currencyToHandler,
+          }}
+        />
+      </div>
 
       <VatRateItem value={vatRate} onChange={vatRateHandler} />
 
