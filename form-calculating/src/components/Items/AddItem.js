@@ -1,29 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import {
-  convertToExchangePrice,
-  calculateGrossPrice,
-  calculateNetPrice,
-  calculateTaxAmount,
-} from '../calculate-items';
-import EqualIcon from './Icons/EqualIcon';
-import currencies from '../currencyExchange.json';
+import { v4 as uuidv4 } from 'uuid';
+import { convertExchangePrice } from '../../calculate-items';
+import EqualIcon from '../Icons/EqualIcon';
+import currencies from '../../currencyExchange.json';
 import './addItem.scss';
 
-function AddItem() {
+function AddItem({ onAddItem }) {
   const [productName, setProductName] = useState('');
-  const [netAmountFrom, setNetAmountFrom] = useState('');
-  const [netAmountTo, setNetAmountTo] = useState('');
-  const [totalNetAmount, setTotalNetAmount] = useState('');
+  const [enterNetAmount, setEnterNetAmount] = useState('');
+  const [finalNetAmount, setFinalNetAmount] = useState('');
 
   const [selectedFromCurrency, setSelectedFromCurrency] = useState('nok');
   const [selectedToCurrency, setSelectedToCurrency] = useState('pln');
   const [currenciesExchange, setCurrenciesExchange] = useState([]);
-  // const [calculateCurrency, setCalculateCurrency] = useState(currencyTo);
-  const [vatRate, setVatRate] = useState(25);
 
-  const [grossPrice, setGrossPrice] = useState(0);
-  const [netPrice, setNetPrice] = useState(0);
-  const [taxAmount, setTaxAmount] = useState(0);
+  const [vatRate, setVatRate] = useState(25);
 
   // Looping through to get currencies Exhange from json file
   useEffect(() => {
@@ -35,42 +26,25 @@ function AddItem() {
     }
   }, []);
 
+  // useEffect for handling source target to newly converted currency Exchange
   useEffect(() => {
     currenciesExchange.map((currencyExchange) => {
       const { currency, priceExchange } = currencyExchange;
       if (selectedFromCurrency === currency) {
         // Targeting the currency to exchange from nok to pln for example
         const targetNewCurrency = priceExchange[selectedToCurrency];
-        const newValue = convertToExchangePrice(netAmountFrom, targetNewCurrency);
+        const newTargetValue = convertExchangePrice(enterNetAmount, targetNewCurrency);
 
-        setNetAmountTo(newValue.toFixed(2));
+        setFinalNetAmount(newTargetValue);
       }
-
-      // if (selectedToCurrency === currency) {
-      //   const targetNewCurrency = priceExchange[selectedFromCurrency];
-      //   const newValue = convertToExchangePrice(netAmountFrom, targetNewCurrency);
-
-      //   setNetAmountTo(newValue.toFixed(2));
-      // }
     });
-  }, [netAmountFrom, selectedFromCurrency, selectedToCurrency]);
-
-  // useEffect(() => {
-  //   // const grossPrice = Number(calculateGrossPrice(netAmount, vatRate)).toFixed(2);
-  //   // const netPrice = Number(calculateNetPrice(grossPrice, vatRate)).toFixed(2);
-  //   // const taxAmountPrice = Number(calculateTaxAmount(netPrice, vatRate)).toFixed(2);
-  //   // setGrossPrice(grossPrice);
-  //   // setNetPrice(netPrice);
-  //   // setTaxAmount(taxAmountPrice);
-  // }, [grossPrice, netAmount, netPrice, vatRate]);
+  }, [enterNetAmount, selectedFromCurrency, selectedToCurrency]);
 
   const enteredProductHandler = (e) => setProductName(e.target.value);
 
-  const amountFromNetHandler = (e) => setNetAmountFrom(parseFloat(e.target.value));
+  const amountFromNetHandler = (e) => setEnterNetAmount(parseFloat(e.target.value));
 
-  const amountToNetHandler = (e) => {
-    setNetAmountTo(parseFloat(e.target.value));
-  };
+  const amountToNetHandler = (e) => setFinalNetAmount(parseFloat(e.target.value));
 
   const vatRateHandler = (e) => setVatRate(e.target.value);
 
@@ -78,8 +52,29 @@ function AddItem() {
 
   const currencyToHandler = (e) => setSelectedToCurrency(e.target.value);
 
+  const submitHandler = (e) => {
+    e.preventDefault();
+
+    // Lifting up the state
+    onAddItem({
+      id: uuidv4(),
+      productName,
+      finalNetAmount,
+      selectedToCurrency,
+      vatRate,
+    });
+
+    // Reset input field to empty string after submitting the form
+    setProductName('');
+    setEnterNetAmount(0.0);
+    setFinalNetAmount(0.0);
+  };
+
   return (
-    <>
+    <form
+      aria-label='Form to calculate the gross amount and tax amount'
+      className='form'
+      onSubmit={submitHandler}>
       <label htmlFor='product-name' className='form__product-label'>
         Product Name
       </label>
@@ -101,7 +96,7 @@ function AddItem() {
         <input
           type='number'
           id='net-amount'
-          value={netAmountFrom}
+          value={enterNetAmount}
           onChange={amountFromNetHandler}
           step='0.01'
           required
@@ -138,7 +133,7 @@ function AddItem() {
         <input
           type='number'
           id='converted-input-currency'
-          value={netAmountTo}
+          value={finalNetAmount}
           onChange={amountToNetHandler}
           step='0.01'
           readOnly
@@ -170,7 +165,15 @@ function AddItem() {
         <option value='5'>5%</option>
         <option value='0'>0%</option>
       </select>
-    </>
+      <button
+        type='submit'
+        aria-label='Calculate the registered item'
+        aria-describedby='Open a new window to display the calculated item before registering the item'
+        aria-modal='true'
+        title='Calculate the registered item'>
+        Calculate
+      </button>
+    </form>
   );
 }
 
