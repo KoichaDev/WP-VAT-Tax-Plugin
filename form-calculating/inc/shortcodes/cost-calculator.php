@@ -9,8 +9,8 @@ function shortcode_form_calculation($atts, $content = null) {
     // Using this div element to "inject" React from the id-attribute as an entry point
     return '
     <div>
-        <div id="overlay"></div
-        <div id="modal-calculator"></div
+        <div id="overlay"></div>
+        <div id="modal-calculator"></div>
         <div id="cost-calculator-root"></div>
     </div>';
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { convertExchangePrice } from '../../calculate-items';
+import AddProductName from './AddProducItem';
 import EqualIcon from '../Icons/EqualIcon';
 import currencies from '../../currencyExchange.json';
 import './addItem.scss';
@@ -75,19 +76,7 @@ function AddItem({ onAddItem, onClick }) {
       aria-label='Form to calculate the gross amount and tax amount'
       className='form'
       onSubmit={submitHandler}>
-      <label htmlFor='product-name' className='form__product-label'>
-        Product Name
-      </label>
-
-      <input
-        type='text'
-        id='product-name'
-        className='form__product-input'
-        placeholder='Enter a product name'
-        onChange={enteredProductHandler}
-        value={productName}
-        required
-      />
+      <AddProductName onChange={enteredProductHandler} value={productName} />
 
       <div style={{ display: 'inline-block' }}>
         <label htmlFor='net-from-amount' className='form__currency-label'>
