@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { calculateGrossPrice, calculateNetPrice, calculateTaxAmount } from './calculate-items';
-import AddItem from './components/Items/AddItem';
-import RegisteredItem from './components/Items/RegisteredItem';
+import AddItem from './components/Items/RegisterItems/AddItem';
+import DisplayItem from './components/Items/DisplayItem';
 import useHttp from './hooks/use-http';
 import './Form.scss';
 

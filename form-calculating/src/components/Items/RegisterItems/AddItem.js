@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { convertExchangePrice } from '../../calculate-items';
-import EqualIcon from '../Icons/EqualIcon';
+import { convertExchangePrice } from './../../../calculate-items';
+import EqualIcon from '../../Icons/EqualIcon';
 import AddProductName from './AddProducItem';
 import AddNetAmountItem from './AddNetAmountItem';
 import AddCurrency from './AddCurrency';
 import FinalNetAmount from './FinalNetAmountItem';
 import VatRateItem from './VatRateItem';
-import currencies from '../../currencyExchange.json';
+import currencies from '../../../currencyExchange.json';
 import './addItem.scss';
 
 function AddItem({ onAddItem, onClick }) {
@@ -82,6 +82,7 @@ function AddItem({ onAddItem, onClick }) {
       onSubmit={submitHandler}>
       <AddProductName onChange={enteredProductHandler} value={productName} />
 
+      {/* Section for adding source target of Net amount  */}
       <div style={{ display: 'inline-block' }}>
         <AddNetAmountItem value={enterNetAmount} onChange={amountFromNetHandler} />
 
@@ -103,6 +104,8 @@ function AddItem({ onAddItem, onClick }) {
         ariaLabel='Currency Converted to'
         title='Currency Converted to'
       />
+
+      {/* Section for converting exchange from the source target of source Net amount  */}
 
       <div style={{ display: 'inline-block' }}>
         <FinalNetAmount value={finalNetAmount} onChange={amountToNetHandler} />

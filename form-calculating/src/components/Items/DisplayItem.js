@@ -1,7 +1,7 @@
 import React from 'react';
 
-function Button() {
+function DisplayItem() {
   return <div></div>;
 }
 
-export default Button;
+export default DisplayItem;
