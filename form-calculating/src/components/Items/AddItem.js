@@ -4,6 +4,7 @@ import { convertExchangePrice } from '../../calculate-items';
 import EqualIcon from '../Icons/EqualIcon';
 import AddProductName from './AddProducItem';
 import AddNetAmountItem from './AddNetAmountItem';
+import AddCurrency from './AddCurrency';
 import NewNetAmountItem from './NewNetAmountItem';
 import VatRateItem from './VatRateItem';
 import currencies from '../../currencyExchange.json';
@@ -81,12 +82,20 @@ function AddItem({ onAddItem, onClick }) {
       onSubmit={submitHandler}>
       <AddProductName onChange={enteredProductHandler} value={productName} />
 
-      <AddNetAmountItem
-        inputValue={enterNetAmount}
-        onChangeInputValue={amountFromNetHandler}
-        currencyValue={selectedFromCurrency}
-        onChangeCurrency={currencyFromHandler}
-      />
+      <div style={{ display: 'inline-block' }}>
+        <AddNetAmountItem value={enterNetAmount} onChange={amountFromNetHandler} />
+
+        <AddCurrency
+          label={{
+            id: 'current-selected-currency',
+            className: 'form__currency-label-from',
+          }}
+          select={{
+            value: selectedFromCurrency,
+            onChange: currencyFromHandler,
+          }}
+        />
+      </div>
 
       <EqualIcon
         className='form__sort-icon'
