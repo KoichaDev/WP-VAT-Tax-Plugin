@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { convertExchangePrice } from '../../calculate-items';
+import EqualIcon from '../Icons/EqualIcon';
 import AddProductName from './AddProducItem';
 import AddNetAmountItem from './AddNetAmountItem';
-import EqualIcon from '../Icons/EqualIcon';
+import NewNetAmountItem from './NewNetAmountItem';
 import currencies from '../../currencyExchange.json';
 import './addItem.scss';
 
@@ -93,37 +94,12 @@ function AddItem({ onAddItem, onClick }) {
         title='Currency Converted to'
       />
 
-      <div style={{ display: 'inline-block' }}>
-        <label
-          htmlFor='converted-input-currency'
-          className='form__currency-label'
-          title='Converted Net Amount'>
-          New Target Net Amount
-        </label>
-
-        <input
-          type='number'
-          id='converted-input-currency'
-          value={finalNetAmount}
-          onChange={amountToNetHandler}
-          step='0.01'
-          readOnly
-          required
-        />
-
-        <label htmlFor='convert-selected-currency' className='form__currency-label-from' />
-        <select
-          id='convert-selected-currency'
-          className='form__selected-converted-currency'
-          value={selectedToCurrency}
-          onChange={currencyToHandler}>
-          <option value='nok'>NOK</option>
-          <option value='pln'>PLN</option>
-          <option value='eur'>EUR</option>
-          <option value='usd'>USD</option>
-        </select>
-      </div>
-
+      <NewNetAmountItem
+        inputValue={finalNetAmount}
+        onChangeInputValue={amountToNetHandler}
+        currencyValue={selectedToCurrency}
+        onChangeCurrency={currencyToHandler}
+      />
       <label htmlFor='vat-rate' className='form__vat-rate-label'>
         VAT Rate:
       </label>
