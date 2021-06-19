@@ -35,6 +35,7 @@ function App() {
     const baseUrl = gsReactScript.url;
     const nonce = gsReactScript.nonce;
     const url = `${baseUrl}/wp-json/cpt/v1/post-form-calculation?id=${targetId}&product-name=${targetProductName}&gross-price=${finalGrossPrice}&tax-amount=${finalTaxAmountPrice}%25&net-amount=${finalNetPrice}&vat-rate=${targetVatRate}%25&currency=${targetCurrency}`;
+
     sendItemRequest({
       url,
       method: 'POST',

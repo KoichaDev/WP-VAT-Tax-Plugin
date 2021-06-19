@@ -5,7 +5,7 @@ import EqualIcon from '../Icons/EqualIcon';
 import currencies from '../../currencyExchange.json';
 import './addItem.scss';
 
-function AddItem({ onAddItem }) {
+function AddItem({ onAddItem, onClick }) {
   const [productName, setProductName] = useState('');
   const [enterNetAmount, setEnterNetAmount] = useState('');
   const [finalNetAmount, setFinalNetAmount] = useState('');
@@ -170,7 +170,8 @@ function AddItem({ onAddItem }) {
         aria-label='Calculate the registered item'
         aria-describedby='Open a new window to display the calculated item before registering the item'
         aria-modal='true'
-        title='Calculate the registered item'>
+        title='Calculate the registered item'
+        onClick={onClick}>
         Calculate
       </button>
     </form>
