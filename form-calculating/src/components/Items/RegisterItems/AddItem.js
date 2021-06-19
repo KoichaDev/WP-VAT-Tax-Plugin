@@ -6,6 +6,7 @@ import AddProductName from './AddProducItem';
 import AddNetAmountItem from './AddNetAmountItem';
 import AddCurrency from './AddCurrency';
 import FinalNetAmount from './FinalNetAmountItem';
+import Form from './../../UI/Form';
 import VatRateItem from './VatRateItem';
 import currencies from '../../../currencyExchange.json';
 import './addItem.scss';
@@ -76,10 +77,12 @@ function AddItem({ onAddItem, onClick }) {
   };
 
   return (
-    <form
-      aria-label='Form to calculate the gross amount and tax amount'
-      className='form'
-      onSubmit={submitHandler}>
+    <Form
+      form={{
+        'aria-label': 'Form to calculate the gross amount and tax amount',
+        className: 'form',
+        onSubmit: submitHandler,
+      }}>
       <AddProductName onChange={enteredProductHandler} value={productName} />
 
       {/* Section for adding source target of Net amount  */}
@@ -133,7 +136,7 @@ function AddItem({ onAddItem, onClick }) {
         onClick={onClick}>
         Calculate
       </button>
-    </form>
+    </Form>
   );
 }
 
