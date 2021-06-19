@@ -1,4 +1,5 @@
 import React from 'react';
+import Select from './../UI/Select';
 import Input from './../UI/Input';
 
 function AddNetAmountItem({ inputValue, onChangeInputValue, currencyValue, onChangeCurrency }) {
@@ -19,17 +20,14 @@ function AddNetAmountItem({ inputValue, onChangeInputValue, currencyValue, onCha
         }}
       />
 
-      <label htmlFor='current-selected-currency' className='form__currency-label-from' />
-      <select
-        id='current-selected-currency'
-        className='form__selected-currency'
-        value={currencyValue}
-        onChange={onChangeCurrency}>
+      <Select
+        label={{ id: 'current-selected-currency', className: 'form__currency-label-from' }}
+        select={{ value: currencyValue, onChange: onChangeCurrency }}>
         <option value='nok'>NOK</option>
         <option value='pln'>PLN</option>
         <option value='eur'>EUR</option>
         <option value='usd'>USD</option>
-      </select>
+      </Select>
     </div>
   );
 }
