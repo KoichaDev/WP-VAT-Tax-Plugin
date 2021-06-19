@@ -1,6 +1,6 @@
 import React from 'react';
 import Input from '../../UI/Input';
-import './FinalNetAmount.scss';
+import './FinalNetAmountItem.scss';
 
 function FinalNetAmount({ value, onChange }) {
   return (

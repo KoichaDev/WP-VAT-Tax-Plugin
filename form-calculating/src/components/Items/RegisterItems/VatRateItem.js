@@ -1,4 +1,5 @@
 import React from 'react';
+import './VatRateItem.scss';
 
 function VatRateItem({ value, onChange }) {
   return (

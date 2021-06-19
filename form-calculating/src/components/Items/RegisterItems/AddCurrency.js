@@ -1,5 +1,6 @@
 import React from 'react';
 import Select from '../../UI/Select';
+import './AddCurrency.scss';
 
 function AddCurrency({ label, select }) {
   return (
