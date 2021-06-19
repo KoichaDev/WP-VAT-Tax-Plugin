@@ -5,6 +5,7 @@ import EqualIcon from '../Icons/EqualIcon';
 import AddProductName from './AddProducItem';
 import AddNetAmountItem from './AddNetAmountItem';
 import NewNetAmountItem from './NewNetAmountItem';
+import VatRateItem from './VatRateItem';
 import currencies from '../../currencyExchange.json';
 import './addItem.scss';
 
@@ -100,18 +101,9 @@ function AddItem({ onAddItem, onClick }) {
         currencyValue={selectedToCurrency}
         onChangeCurrency={currencyToHandler}
       />
-      <label htmlFor='vat-rate' className='form__vat-rate-label'>
-        VAT Rate:
-      </label>
-      <select id='form__vat-rate' className='form__vat-rate' value={vatRate} onChange={vatRateHandler}>
-        <option value='25'>25%</option>
-        <option value='23'>23%</option>
-        <option value='22'>22%</option>
-        <option value='8'>8%</option>
-        <option value='7'>7%</option>
-        <option value='5'>5%</option>
-        <option value='0'>0%</option>
-      </select>
+
+      <VatRateItem value={vatRate} onChange={vatRateHandler} />
+
       <button
         type='submit'
         aria-label='Calculate the registered item'
