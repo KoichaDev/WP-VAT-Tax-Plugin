@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { convertExchangePrice } from '../../calculate-items';
 import AddProductName from './AddProducItem';
+import AddNetAmountItem from './AddNetAmountItem';
 import EqualIcon from '../Icons/EqualIcon';
 import currencies from '../../currencyExchange.json';
 import './addItem.scss';
@@ -78,31 +79,12 @@ function AddItem({ onAddItem, onClick }) {
       onSubmit={submitHandler}>
       <AddProductName onChange={enteredProductHandler} value={productName} />
 
-      <div style={{ display: 'inline-block' }}>
-        <label htmlFor='net-from-amount' className='form__currency-label'>
-          Current Net Amount
-        </label>
-        <input
-          type='number'
-          id='net-amount'
-          value={enterNetAmount}
-          onChange={amountFromNetHandler}
-          step='0.01'
-          required
-        />
-
-        <label htmlFor='current-selected-currency' className='form__currency-label-from' />
-        <select
-          id='current-selected-currency'
-          className='form__selected-currency'
-          value={selectedFromCurrency}
-          onChange={currencyFromHandler}>
-          <option value='nok'>NOK</option>
-          <option value='pln'>PLN</option>
-          <option value='eur'>EUR</option>
-          <option value='usd'>USD</option>
-        </select>
-      </div>
+      <AddNetAmountItem
+        inputValue={enterNetAmount}
+        onChangeInputValue={amountFromNetHandler}
+        currencyValue={selectedFromCurrency}
+        onChangeCurrency={currencyFromHandler}
+      />
 
       <EqualIcon
         className='form__sort-icon'
