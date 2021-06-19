@@ -1,19 +1,22 @@
 import React from 'react';
+import Input from './../UI/Input';
 
 function AddNetAmountItem({ inputValue, onChangeInputValue, currencyValue, onChangeCurrency }) {
   return (
     <div style={{ display: 'inline-block' }}>
-      <label htmlFor='net-from-amount' className='form__currency-label'>
-        Current Net Amount
-      </label>
-
-      <input
-        type='number'
-        id='net-amount'
-        value={inputValue}
-        onChange={onChangeInputValue}
-        step='0.01'
-        required
+      <Input
+        label={{
+          className: 'form__currency-label',
+          name: 'Current Net Amount',
+        }}
+        input={{
+          type: 'number',
+          id: 'net-amount',
+          value: inputValue,
+          onChange: onChangeInputValue,
+          step: '0.01',
+          required: 'required',
+        }}
       />
 
       <label htmlFor='current-selected-currency' className='form__currency-label-from' />
