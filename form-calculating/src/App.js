@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import useHttp from './hooks/use-http';
 import { calculateGrossPrice, calculateNetPrice, calculateTaxAmount } from './calculate-items';
-import CalculateItem from './components/Items/RegisterItems/CalculateItem';
+import CalculateItem from './components/Items/CalculateItem';
 import RegisterItem from './components/Items/RegisterItem';
 import LatestPermalinkPost from './components/Posts/LatestPermalinkPost';
 import './Form.scss';

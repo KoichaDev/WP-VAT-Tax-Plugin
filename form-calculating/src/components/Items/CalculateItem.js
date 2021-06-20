@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { convertExchangePrice } from '../../../calculate-items';
+import { convertExchangePrice } from '../../calculate-items';
 import AddProductName from './AddProducItem';
 import AddNetAmountItem from './AddNetAmountItem';
 import AddCurrency from './AddCurrency';
-import currencies from '../../../currencyExchange.json';
-import EqualIcon from '../../Icons/EqualIcon';
+import currencies from '../../currencyExchange.json';
+import EqualIcon from '../Icons/EqualIcon';
 import FinalNetAmount from './FinalNetAmountItem';
-import Form from '../../UI/Form';
+import Form from '../UI/Form';
 import VatRateItem from './VatRateItem';
 import './CalculateItem.scss';
 

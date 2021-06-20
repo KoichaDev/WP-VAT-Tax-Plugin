@@ -1,23 +1,25 @@
 import React from 'react';
-import Input from '../../UI/Input';
+import Input from '../UI/Input';
+import './FinalNetAmountItem.scss';
 
-function AddNetAmountItem({ value, onChange }) {
+function FinalNetAmount({ value, onChange }) {
   return (
     <Input
       label={{
         className: 'form__currency-label',
-        name: 'Current Net Amount',
+        name: 'New Target Net Amount',
       }}
       input={{
         type: 'number',
-        id: 'net-amount',
+        id: 'converted-input-currency',
         value: value,
         onChange: onChange,
         step: '0.01',
+        readOnly: 'readOnly',
         required: 'required',
       }}
     />
   );
 }
 
-export default AddNetAmountItem;
+export default FinalNetAmount;
