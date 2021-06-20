@@ -133,6 +133,7 @@ function AddItem({ onAddItem, isVisible, setIsVisible, onClick }) {
 
       <button
         type='submit'
+        className='btn'
         aria-label='Calculate the registered item'
         aria-describedby='Open a new window to display the calculated information before registering the item'
         aria-modal='true'
