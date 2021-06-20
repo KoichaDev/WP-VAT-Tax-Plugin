@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { convertExchangePrice } from './../../../calculate-items';
-import EqualIcon from '../../Icons/EqualIcon';
 import AddProductName from './AddProducItem';
 import AddNetAmountItem from './AddNetAmountItem';
 import AddCurrency from './AddCurrency';
+import currencies from '../../../currencyExchange.json';
+import EqualIcon from '../../Icons/EqualIcon';
 import FinalNetAmount from './FinalNetAmountItem';
 import Form from './../../UI/Form';
 import VatRateItem from './VatRateItem';
-import currencies from '../../../currencyExchange.json';
 import './addItem.scss';
 
 function AddItem({ onAddItem, onClick }) {
@@ -130,7 +130,7 @@ function AddItem({ onAddItem, onClick }) {
       <button
         type='submit'
         aria-label='Calculate the registered item'
-        aria-describedby='Open a new window to display the calculated item before registering the item'
+        aria-describedby='Open a new window to display the calculated information before registering the item'
         aria-modal='true'
         title='Calculate the registered item'
         onClick={onClick}>
