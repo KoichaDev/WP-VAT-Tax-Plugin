@@ -3,7 +3,7 @@ function post_route_api() {
 
     register_rest_route('cpt/v1', 'post-form-calculation', [
         'methods' => WP_REST_SERVER::CREATABLE,
-        'callback' => 'post_result'
+        'callback' => 'post_result',
     ]);
 }
 
@@ -12,8 +12,6 @@ function post_result($data) {
         'post_type'     => 'cpt-form-calculation',
         'post_status'   => 'publish',
     ]);
-
-    // $sanitize_field = sanitize_text_field($data);
 
     $updated_fields['goods'] = [
         'product_id'            => $data['id'],
@@ -37,7 +35,8 @@ function post_result($data) {
 
     $post = [
         'title' => get_the_title($post_id),
-        'permalink' => get_permalink($post_id)
+        'editPermalink' => get_edit_post_link($post_id)
+
     ];
 
     return array_merge($post, $updated_fields);

@@ -1,7 +1,7 @@
 import React from 'react';
 
-function Notification() {
-  return <div></div>;
+function Notification({ children }) {
+  return <div>{children}</div>;
 }
 
 export default Notification;

@@ -29,7 +29,7 @@ function enqueue_react_script() {
 
         wp_localize_script('react-script', 'gsReactScript', [
             'url' => get_site_url(), // Returns the URL of the current WP installation address
-            'nonce' => wp_create_nonce('wp_rest') // WP will give user ID to check if the user is logged in or not, so we can perform CRUD operation
+            'nonce' => wp_create_nonce('wp_rest') // WP will give user ID to check if the user is logged in or not, so we can perform safe CRUD operation
         ]);
     }
 }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import useHttp from './hooks/use-http';
 import { calculateGrossPrice, calculateNetPrice, calculateTaxAmount } from './calculate-items';
 import CalculateItem from './components/Items/CalculateItem';
+import Notification from './components/UI/Notification';
 import RegisterItem from './components/Items/RegisterItem';
 import './Form.scss';
 
@@ -9,6 +10,7 @@ function App() {
   const { isLoading, error, sendRequest: sendItemRequest } = useHttp();
 
   const [item, setItem] = useState([]);
+  const [notificationContent, setNotificationContent] = useState(null);
   const [isVisible, setIsVisible] = useState(isLoading);
   const [targetGrossPrice, setTargetGrossPrice] = useState('');
   const [targetNetProductPrice, setTargetNetProductPrice] = useState('');
@@ -36,7 +38,20 @@ function App() {
 
   const calculateItemHandler = () => setIsVisible((prevIsVisible) => !prevIsVisible);
 
-  const notificationHandler = (item) => console.log(item);
+  // This handler will be used to notify the user that post has been updated
+  const notificationHandler = (item) => {
+    const { editPermalink, title } = item;
+
+    setNotificationContent(() => {
+      return (
+        <Notification>
+          <a href={editPermalink} aria-label={`New Post has been created ${title}`}>
+            New post {title} has been updated
+          </a>
+        </Notification>
+      );
+    });
+  };
 
   let itemModalContent = '';
 
@@ -58,6 +73,7 @@ function App() {
 
   return (
     <>
+      {notificationContent}
       <h1>Calculate Tax and Vat</h1>
       <CalculateItem onAddItem={onAddItemHandler} isVisible={isVisible} onClick={calculateItemHandler} />
       {itemModalContent}

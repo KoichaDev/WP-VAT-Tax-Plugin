@@ -36,7 +36,6 @@ const ModalOverlay = ({ closeModal, onAddNotification, setIsVisible, sendItemReq
     } = latestItem;
     const baseUrl = gsReactScript.url;
     const nonce = gsReactScript.nonce;
-
     const url = `${baseUrl}/wp-json/cpt/v1/post-form-calculation?id=${targetId}&product-name=${targetProductName}&gross-price=${grossPrice}&tax-amount=${taxAmount}%25&net-amount=${netProductPrice}&vat-rate=${targetVatRate}%25&currency=${targetCurrency}`;
 
     const sentItem = sendItemRequest({

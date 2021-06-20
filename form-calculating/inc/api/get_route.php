@@ -22,8 +22,9 @@ function get_post_results($data) {
 
         $cpt_post = [
             'title' => get_the_title(),
-            'permalink' => get_permalink()
+            'permalink' => get_permalink(),
         ];
+
         $cpt_fields = get_field('goods', $post_id);
 
         $form_calculation_results[] = array_merge($cpt_post, $cpt_fields);
