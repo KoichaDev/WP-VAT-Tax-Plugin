@@ -35,8 +35,6 @@ function post_result($data) {
 
     $post = [
         'title' => get_the_title($post_id),
-        'editPermalink' => get_edit_post_link($post_id)
-
     ];
 
     return array_merge($post, $updated_fields);
