@@ -11,7 +11,7 @@ import Form from './../../UI/Form';
 import VatRateItem from './VatRateItem';
 import './addItem.scss';
 
-function AddItem({ onAddItem, onClick }) {
+function AddItem({ onAddItem, isVisible, setIsVisible, onClick }) {
   const [productName, setProductName] = useState('');
   const [enterNetAmount, setEnterNetAmount] = useState('');
   const [finalNetAmount, setFinalNetAmount] = useState('');
@@ -46,6 +46,15 @@ function AddItem({ onAddItem, onClick }) {
     });
   }, [enterNetAmount, selectedFromCurrency, selectedToCurrency]);
 
+  // Reset input field to empty string after submitting the form
+  useEffect(() => {
+    if (!isVisible) {
+      setProductName('');
+      setEnterNetAmount(0.0);
+      setFinalNetAmount(0.0);
+    }
+  }, [isVisible]);
+
   const enteredProductHandler = (e) => setProductName(e.target.value);
 
   const amountFromNetHandler = (e) => setEnterNetAmount(parseFloat(e.target.value));
@@ -69,11 +78,6 @@ function AddItem({ onAddItem, onClick }) {
       selectedToCurrency,
       vatRate,
     });
-
-    // Reset input field to empty string after submitting the form
-    // setProductName('');
-    // setEnterNetAmount(0.0);
-    // setFinalNetAmount(0.0);
   };
 
   return (
