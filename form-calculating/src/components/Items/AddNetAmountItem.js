@@ -6,14 +6,14 @@ function AddNetAmountItem({ value, onChange }) {
     <Input
       label={{
         className: 'form__currency-label',
-        name: 'Current Net Amount',
+        name: 'Enter Net Amount',
       }}
       input={{
         type: 'number',
         id: 'net-amount',
         value: value,
         onChange: onChange,
-        placeholder: 'Enter net amount...',
+        placeholder: 'Add a number...',
         title: 'Your net amount to convert new exchange ',
         'aria-label': 'Net amount',
         'aria-describedby': 'Your product of net amount',
