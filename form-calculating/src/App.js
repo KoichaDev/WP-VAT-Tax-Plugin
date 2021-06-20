@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import useHttp from './hooks/use-http';
 import { calculateGrossPrice, calculateNetPrice, calculateTaxAmount } from './calculate-items';
-import AddItem from './components/Items/RegisterItems/AddItem';
-import ItemModal from './components/Items/ItemModal';
-import PermalinkPost from './components/Posts/PermalinkPost';
+import CalculateItem from './components/Items/RegisterItems/CalculateItem';
+import RegisterItem from './components/Items/RegisterItem';
+import LatestPermalinkPost from './components/Posts/LatestPermalinkPost';
 import './Form.scss';
 
 function App() {
@@ -41,7 +41,7 @@ function App() {
 
   if (isVisible) {
     itemModalContent = (
-      <ItemModal
+      <RegisterItem
         item={item}
         grossPrice={targetGrossPrice}
         netProductPrice={targetNetProductPrice}
@@ -56,9 +56,9 @@ function App() {
 
   return (
     <>
-      <PermalinkPost />
+      <LatestPermalinkPost />
       <h1>Calculate Tax and Vat</h1>
-      <AddItem onAddItem={onAddItemHandler} isVisible={isVisible} onClick={calculateItemHandler} />
+      <CalculateItem onAddItem={onAddItemHandler} isVisible={isVisible} onClick={calculateItemHandler} />
       {itemModalContent}
     </>
   );

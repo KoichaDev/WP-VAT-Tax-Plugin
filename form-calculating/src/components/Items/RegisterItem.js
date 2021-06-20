@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM, { createPortal } from 'react-dom';
-import './ItemModal.scss';
+import './RegisterItem.scss';
 
 const Backdrop = ({ closeModal, onCloseExit }) => {
   const exitModalHandler = (e) => {
@@ -91,7 +91,7 @@ const ModalOverlay = ({ closeModal, setIsVisible, sendItemRequest, ...props }) =
   return <>{calculatedContent}</>;
 };
 
-const ItemModal = ({ closeModal, isVisible, setIsVisible, sendItemRequest, ...props }) => {
+const RegisterItem = ({ closeModal, isVisible, setIsVisible, sendItemRequest, ...props }) => {
   let backDropContent = '';
   let modalOverlayContent = '';
 
@@ -125,4 +125,4 @@ const ItemModal = ({ closeModal, isVisible, setIsVisible, sendItemRequest, ...pr
   );
 };
 
-export default ItemModal;
+export default RegisterItem;
