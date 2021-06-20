@@ -46,9 +46,9 @@ function App() {
         netProductPrice={targetNetProductPrice}
         taxAmount={targetTaxAmount}
         closeModal={calculateItemHandler}
-        sendItemRequest={sendItemRequest}
         isVisible={isVisible}
         setIsVisible={setIsVisible}
+        sendItemRequest={sendItemRequest}
       />
     );
   }
@@ -56,7 +56,7 @@ function App() {
   return (
     <>
       <h1>Calculate Tax and Vat</h1>
-      <AddItem onAddItem={onAddItemHandler} onClick={calculateItemHandler} />
+      <AddItem onAddItem={onAddItemHandler} isVisible={isVisible} onClick={calculateItemHandler} />
       {itemModalContent}
     </>
   );
