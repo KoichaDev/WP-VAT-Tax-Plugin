@@ -3,6 +3,7 @@ import useHttp from './hooks/use-http';
 import { calculateGrossPrice, calculateNetPrice, calculateTaxAmount } from './calculate-items';
 import AddItem from './components/Items/RegisterItems/AddItem';
 import ItemModal from './components/Items/ItemModal';
+import PermalinkPost from './components/Posts/PermalinkPost';
 import './Form.scss';
 
 function App() {
@@ -55,6 +56,7 @@ function App() {
 
   return (
     <>
+      <PermalinkPost />
       <h1>Calculate Tax and Vat</h1>
       <AddItem onAddItem={onAddItemHandler} isVisible={isVisible} onClick={calculateItemHandler} />
       {itemModalContent}

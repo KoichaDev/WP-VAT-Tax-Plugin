@@ -13,6 +13,8 @@ function post_result($data) {
         'post_status'   => 'publish',
     ]);
 
+    // $sanitize_field = sanitize_text_field($data);
+
     $updated_fields['goods'] = [
         'product_id'            => $data['id'],
         'product_name'          => $data['product-name'],

@@ -4,30 +4,29 @@ function get_route_api() {
 
     register_rest_route('cpt/v1', 'form-calculation', [
         'methods' => WP_REST_SERVER::READABLE,
-        'callback' => 'get_result'
+        'callback' => 'get_post_results'
     ]);
 }
 
-function get_result($data) {
+function get_post_results($data) {
     $args = [
         'post_type' =>  'cpt-form-calculation',
         's'         =>  sanitize_text_field($data['search'])
     ];
-    $form_calculation = new WP_Query($args);
 
-    $form_calculation_results = [];
+    $form_calculation = new WP_Query($args);
 
     while ($form_calculation->have_posts()) {
         $form_calculation->the_post();
+        $post_id = $form_calculation->ID;
 
-        $form_calculation_results[] = [
-            'title'         => get_the_title(),
-            'productName'   => get_field('product'),
-            'netAmount'     => get_field('net_amount'),
-            'vatRate'       => get_field('vat_rate'),
-            'currency'      => get_field('currency'),
-            'permalink'     => get_the_permalink(),
+        $cpt_post = [
+            'title' => get_the_title(),
+            'permalink' => get_permalink()
         ];
+        $cpt_fields = get_field('goods', $post_id);
+
+        $form_calculation_results[] = array_merge($cpt_post, $cpt_fields);
     }
 
     return $form_calculation_results;
