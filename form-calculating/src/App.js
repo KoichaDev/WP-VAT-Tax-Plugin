@@ -6,13 +6,13 @@ import ItemModal from './components/Items/ItemModal';
 import './Form.scss';
 
 function App() {
+  const { isLoading, error, sendRequest: sendItemRequest } = useHttp();
+
   const [item, setItem] = useState([]);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(isLoading);
   const [targetGrossPrice, setTargetGrossPrice] = useState('');
   const [targetNetProductPrice, setTargetNetProductPrice] = useState('');
   const [targetTaxAmount, setTargetTaxAmount] = useState('');
-
-  const { isLoading, setIsLoading, error, sendRequest: sendItemRequest } = useHttp();
 
   const onAddItemHandler = (item) => {
     setItem((prevItem) => [...prevItem, item]);
@@ -49,7 +49,8 @@ function App() {
         closeModal={calculateItemHandler}
         onCloseExit={calculateItemHandler}
         sendItemRequest={sendItemRequest}
-        isLoading={isLoading}
+        isVisible={isVisible}
+        setIsVisible={setIsVisible}
       />
     );
   }

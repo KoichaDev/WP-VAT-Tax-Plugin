@@ -21,7 +21,7 @@ const Backdrop = ({ onClick, onCloseExit }) => {
   );
 };
 
-const ModalOverlay = ({ onClick, sendItemRequest, ...props }) => {
+const ModalOverlay = ({ onClick, setIsVisible, sendItemRequest, ...props }) => {
   const sendRequestHandler = async (props) => {
     // todo: refactor the props shit...
     const { grossPrice, item, netProductPrice, taxAmount } = props;
@@ -49,6 +49,7 @@ const ModalOverlay = ({ onClick, sendItemRequest, ...props }) => {
       credentials: 'same-origin',
       body: props,
     });
+    setIsVisible(false);
   };
 
   let calculatedContent = '';
@@ -90,28 +91,31 @@ const ModalOverlay = ({ onClick, sendItemRequest, ...props }) => {
   return <>{calculatedContent}</>;
 };
 
-const ItemModal = ({ onClick, isLoading, sendItemRequest, ...props }) => {
+const ItemModal = ({ onClick, isVisible, setIsVisible, sendItemRequest, ...props }) => {
   let backDropContent = '';
   let modalOverlayContent = '';
 
-  if (!isLoading) {
+  if (isVisible) {
     backDropContent = (
       <>{createPortal(<Backdrop onClick={onClick} />, document.getElementById('backdrop-root'))}</>
     );
   }
 
-  if (!isLoading) {
+  if (isVisible) {
     modalOverlayContent = (
       <>
         {createPortal(
-          <ModalOverlay {...props} sendItemRequest={sendItemRequest} onClick={onClick} />,
+          <ModalOverlay
+            {...props}
+            sendItemRequest={sendItemRequest}
+            setIsVisible={setIsVisible}
+            onClick={onClick}
+          />,
           document.getElementById('modal-overlay-root')
         )}
       </>
     );
   }
-
-  console.log(isLoading);
 
   return (
     <>
