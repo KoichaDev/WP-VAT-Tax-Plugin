@@ -13,6 +13,10 @@ function AddNetAmountItem({ value, onChange }) {
         id: 'net-amount',
         value: value,
         onChange: onChange,
+        placeholder: 'Enter net amount...',
+        title: 'Your net amount to convert new exchange ',
+        'aria-label': 'Net amount',
+        'aria-describedby': 'Your product of net amount',
         step: '0.01',
         required: 'required',
       }}
