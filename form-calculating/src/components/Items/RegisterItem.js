@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM, { createPortal } from 'react-dom';
 import './RegisterItem.scss';
 
@@ -21,7 +21,7 @@ const Backdrop = ({ closeModal, onCloseExit }) => {
   );
 };
 
-const ModalOverlay = ({ closeModal, setIsVisible, sendItemRequest, ...props }) => {
+const ModalOverlay = ({ closeModal, onAddNotification, setIsVisible, sendItemRequest, ...props }) => {
   const sendRequestHandler = async (props) => {
     // todo: refactor the props shit...
     const { grossPrice, item, netProductPrice, taxAmount } = props;
@@ -39,7 +39,7 @@ const ModalOverlay = ({ closeModal, setIsVisible, sendItemRequest, ...props }) =
 
     const url = `${baseUrl}/wp-json/cpt/v1/post-form-calculation?id=${targetId}&product-name=${targetProductName}&gross-price=${grossPrice}&tax-amount=${taxAmount}%25&net-amount=${netProductPrice}&vat-rate=${targetVatRate}%25&currency=${targetCurrency}`;
 
-    sendItemRequest({
+    const sentItem = sendItemRequest({
       url,
       method: 'POST',
       headers: {
@@ -49,11 +49,20 @@ const ModalOverlay = ({ closeModal, setIsVisible, sendItemRequest, ...props }) =
       credentials: 'same-origin',
       body: props,
     });
-    setIsVisible(false);
+
+    // We want to save the sentItem state as latestPost to use it in context for updating out notification component
+    // It let's the end user to see the post has been updated as well as they can click on the custom post type to see the content
+    sentItem.then((item) => {
+      // Lifting up the state
+      onAddNotification(item);
+      // Switching off the calculation modal
+      setIsVisible(false);
+    });
   };
 
   let calculatedContent = '';
 
+  // Checking if there is any array item exist
   if (props.item.length > 0) {
     const { grossPrice, item, netProductPrice, taxAmount } = props;
 
@@ -91,7 +100,14 @@ const ModalOverlay = ({ closeModal, setIsVisible, sendItemRequest, ...props }) =
   return <>{calculatedContent}</>;
 };
 
-const RegisterItem = ({ closeModal, isVisible, setIsVisible, sendItemRequest, ...props }) => {
+const RegisterItem = ({
+  closeModal,
+  isVisible,
+  onAddNotification,
+  setIsVisible,
+  sendItemRequest,
+  ...props
+}) => {
   let backDropContent = '';
   let modalOverlayContent = '';
 
@@ -107,6 +123,7 @@ const RegisterItem = ({ closeModal, isVisible, setIsVisible, sendItemRequest, ..
         {createPortal(
           <ModalOverlay
             {...props}
+            onAddNotification={onAddNotification}
             sendItemRequest={sendItemRequest}
             setIsVisible={setIsVisible}
             closeModal={closeModal}

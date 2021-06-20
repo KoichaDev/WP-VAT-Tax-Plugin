@@ -35,7 +35,12 @@ function post_result($data) {
         'post_title' => 'Form Calculation #' . $post_id
     ]);
 
-    return $updated_fields;
+    $post = [
+        'title' => get_the_title($post_id),
+        'permalink' => get_permalink($post_id)
+    ];
+
+    return array_merge($post, $updated_fields);
 }
 
 add_action('rest_api_init', 'post_route_api');

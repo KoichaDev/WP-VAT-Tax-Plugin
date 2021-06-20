@@ -50,8 +50,8 @@ function AddItem({ onAddItem, isVisible, setIsVisible, onClick }) {
   useEffect(() => {
     if (!isVisible) {
       setProductName('');
-      setEnterNetAmount(0.0);
-      setFinalNetAmount(0.0);
+      setEnterNetAmount('');
+      setFinalNetAmount('');
     }
   }, [isVisible]);
 
