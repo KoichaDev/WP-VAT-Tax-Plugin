@@ -71,9 +71,9 @@ function AddItem({ onAddItem, onClick }) {
     });
 
     // Reset input field to empty string after submitting the form
-    setProductName('');
-    setEnterNetAmount(0.0);
-    setFinalNetAmount(0.0);
+    // setProductName('');
+    // setEnterNetAmount(0.0);
+    // setFinalNetAmount(0.0);
   };
 
   return (

@@ -22,11 +22,12 @@ function useHttp() {
       return await response.json();
     } catch (err) {
       setError(err.message || 'Something went wrong!');
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }, []);
 
-  return { isLoading, error, sendRequest };
+  return { isLoading, setIsLoading, error, sendRequest };
 }
 
 export default useHttp;

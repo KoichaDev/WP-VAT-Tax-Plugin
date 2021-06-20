@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import useHttp from './hooks/use-http';
 import { calculateGrossPrice, calculateNetPrice, calculateTaxAmount } from './calculate-items';
 import AddItem from './components/Items/RegisterItems/AddItem';
 import ItemModal from './components/Items/ItemModal';
-import useHttp from './hooks/use-http';
 import './Form.scss';
 
 function App() {
@@ -12,19 +12,7 @@ function App() {
   const [targetNetProductPrice, setTargetNetProductPrice] = useState('');
   const [targetTaxAmount, setTargetTaxAmount] = useState('');
 
-  const { isLoading, error, sendRequest: sendItemRequest } = useHttp();
-
-  useEffect(() => {
-    <ItemModal
-      item={item}
-      grossPrice={targetGrossPrice}
-      netProductPrice={targetNetProductPrice}
-      taxAmount={targetTaxAmount}
-      onClick={calculateItemHandler}
-      closeModal={calculateItemHandler}
-      onCloseExit={calculateItemHandler}
-    />;
-  }, [item]);
+  const { isLoading, setIsLoading, error, sendRequest: sendItemRequest } = useHttp();
 
   const onAddItemHandler = (item) => {
     setItem((prevItem) => [...prevItem, item]);
@@ -44,21 +32,6 @@ function App() {
     setTargetGrossPrice(finalGrossPrice);
     setTargetNetProductPrice(finalNetProductPrice);
     setTargetTaxAmount(finalTaxAmountPrice);
-
-    // const baseUrl = gsReactScript.url;
-    // const nonce = gsReactScript.nonce;
-    // const url = `${baseUrl}/wp-json/cpt/v1/post-form-calculation?id=${targetId}&product-name=${targetProductName}&gross-price=${finalGrossPrice}&tax-amount=${finalTaxAmountPrice}%25&net-amount=${finalNetProductPrice}&vat-rate=${targetVatRate}%25&currency=${targetCurrency}`;
-
-    // sendItemRequest({
-    //   url,
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     'X-WP-Nonce': nonce,
-    //   },
-    //   credentials: 'same-origin',
-    //   body: item,
-    // });
   };
 
   const calculateItemHandler = () => setIsVisible((prevIsVisible) => !prevIsVisible);
@@ -75,6 +48,8 @@ function App() {
         onClick={calculateItemHandler}
         closeModal={calculateItemHandler}
         onCloseExit={calculateItemHandler}
+        sendItemRequest={sendItemRequest}
+        isLoading={isLoading}
       />
     );
   }
@@ -83,7 +58,6 @@ function App() {
     <>
       <h1>Calculate Tax and Vat</h1>
       <AddItem onAddItem={onAddItemHandler} onClick={calculateItemHandler} />
-      {error ? <p>{error}</p> : ''}
       {itemModalContent}
     </>
   );

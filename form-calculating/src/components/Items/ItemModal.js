@@ -21,16 +21,46 @@ const Backdrop = ({ onClick, onCloseExit }) => {
   );
 };
 
-const ModalOverlay = ({ onClick, sendRequest, ...props }) => {
-  const { grossPrice, item, netProductPrice, taxAmount } = props;
+const ModalOverlay = ({ onClick, sendItemRequest, ...props }) => {
+  const sendRequestHandler = async (props) => {
+    // todo: refactor the props shit...
+    const { grossPrice, item, netProductPrice, taxAmount } = props;
+
+    const latestItem = item[item.length - 1];
+    const {
+      finalNetAmount,
+      id: targetId,
+      productName: targetProductName,
+      selectedToCurrency: targetCurrency,
+      vatRate: targetVatRate,
+    } = latestItem;
+    const baseUrl = gsReactScript.url;
+    const nonce = gsReactScript.nonce;
+
+    const url = `${baseUrl}/wp-json/cpt/v1/post-form-calculation?id=${targetId}&product-name=${targetProductName}&gross-price=${grossPrice}&tax-amount=${taxAmount}%25&net-amount=${netProductPrice}&vat-rate=${targetVatRate}%25&currency=${targetCurrency}`;
+
+    sendItemRequest({
+      url,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-WP-Nonce': nonce,
+      },
+      credentials: 'same-origin',
+      body: props,
+    });
+  };
 
   let calculatedContent = '';
 
-  if (item.length > 0) {
-    const { finalNetAmount, id, productName, selectedToCurrency, vatRate } = item[item.length - 1];
+  if (props.item.length > 0) {
+    const { grossPrice, item, netProductPrice, taxAmount } = props;
+
+    const latestItem = item[item.length - 1];
+    const { finalNetAmount, id, productName, selectedToCurrency, vatRate } = latestItem;
 
     calculatedContent = (
-      <form className='modal' onSubmit={submitHandler}>
+      <form className='modal' onSubmit={(e) => e.preventDefault()}>
         <article>
           <header>
             <h2>Information</h2>
@@ -47,7 +77,7 @@ const ModalOverlay = ({ onClick, sendRequest, ...props }) => {
           </div>
 
           <footer>
-            <button type='submit' onClick={submitItemHandler}>
+            <button type='submit' onClick={sendRequestHandler.bind(null, props)}>
               Register Item
             </button>
             <button onClick={onClick}>cancel</button>
@@ -57,44 +87,36 @@ const ModalOverlay = ({ onClick, sendRequest, ...props }) => {
     );
   }
 
-  const submitHandler = (e) => e.preventDefault();
-
-  const submitItemHandler = async () => {
-    console.log('clciked');
-
-    // const baseUrl = gsReactScript.url;
-    // const nonce = gsReactScript.nonce;
-    // const url = `${baseUrl}/wp-json/cpt/v1/post-form-calculation?id=${targetId}&product-name=${targetProductName}&gross-price=${finalGrossPrice}&tax-amount=${finalTaxAmountPrice}%25&net-amount=${finalNetProductPrice}&vat-rate=${targetVatRate}%25&currency=${targetCurrency}`;
-
-    // sendItemRequest({
-    //   url,
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     'X-WP-Nonce': nonce,
-    //   },
-    //   credentials: 'same-origin',
-    //   body: item,
-    // });
-  };
-
   return <>{calculatedContent}</>;
 };
 
-const ItemModal = ({ onClick, sendRequest, ...props }) => {
+const ItemModal = ({ onClick, isLoading, sendItemRequest, ...props }) => {
+  let backDropContent = '';
+  let modalOverlayContent = '';
+
+  if (!isLoading) {
+    backDropContent = (
+      <>{createPortal(<Backdrop onClick={onClick} />, document.getElementById('backdrop-root'))}</>
+    );
+  }
+
+  if (!isLoading) {
+    modalOverlayContent = (
+      <>
+        {createPortal(
+          <ModalOverlay {...props} sendItemRequest={sendItemRequest} onClick={onClick} />,
+          document.getElementById('modal-overlay-root')
+        )}
+      </>
+    );
+  }
+
+  console.log(isLoading);
+
   return (
     <>
-      {createPortal(<Backdrop onClick={onClick} />, document.getElementById('backdrop-root'))}
-      {createPortal(
-        <ModalOverlay
-          {...props}
-          onClick={onClick}
-          // item={item}
-          // targetGrossPrice
-          // onConfirm={props.onConfirm}
-        />,
-        document.getElementById('modal-overlay-root')
-      )}
+      {backDropContent}
+      {modalOverlayContent}
     </>
   );
 };
