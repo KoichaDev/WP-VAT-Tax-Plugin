@@ -40,14 +40,22 @@ function App() {
 
   // This handler will be used to notify the user that post has been updated
   const notificationHandler = (item) => {
-    const { editPermalink, title } = item;
+    const closeNotificationHandler = () => setNotificationContent(null);
+
+    let notificationMessage = (
+      <p aria-label={`Post has been created ${item?.title}`}>
+        Your Post <strong>{item?.title}</strong> has been created
+      </p>
+    );
+
+    if (error) {
+      notificationMessage = <p aria-label={error}>{error}</p>;
+    }
 
     setNotificationContent(() => {
       return (
-        <Notification>
-          <a href={editPermalink} aria-label={`New Post has been created ${title}`}>
-            New post {title} has been updated
-          </a>
+        <Notification onClick={closeNotificationHandler} error={error}>
+          {notificationMessage}
         </Notification>
       );
     });

@@ -1,0 +1,47 @@
+.notification {
+  display: inline-block;
+  position: relative;
+  padding: 4px;
+  margin-top: 1em;
+  background: #016501;
+  color: #fff;
+  animation: slide-down 300ms ease-out forwards;
+
+  &.error {
+    background: #dc3545;
+    color: white;
+  }
+
+  .notification__button {
+    display: block;
+    padding: 2px 1em;
+    color: #fff;
+    border: none;
+    background: #007bff;
+    border-color: #007bff;
+    border-radius: 2px;
+    margin: 1em 1em;
+    cursor: pointer;
+    transition: 0.3s;
+
+    &:hover {
+      background: #0069d9;
+      border-color: #0062cc;
+    }
+  }
+
+  p {
+    margin: 1em;
+  }
+
+  @keyframes slide-down {
+    from {
+      opacity: 0;
+      transform: translateY(-3rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
