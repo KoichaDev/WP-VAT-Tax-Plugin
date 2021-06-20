@@ -45,9 +45,7 @@ function App() {
         grossPrice={targetGrossPrice}
         netProductPrice={targetNetProductPrice}
         taxAmount={targetTaxAmount}
-        onClick={calculateItemHandler}
         closeModal={calculateItemHandler}
-        onCloseExit={calculateItemHandler}
         sendItemRequest={sendItemRequest}
         isVisible={isVisible}
         setIsVisible={setIsVisible}

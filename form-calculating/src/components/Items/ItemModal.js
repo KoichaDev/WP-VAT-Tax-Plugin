@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM, { createPortal } from 'react-dom';
 import './ItemModal.scss';
 
-const Backdrop = ({ onClick, onCloseExit }) => {
+const Backdrop = ({ closeModal, onCloseExit }) => {
   const exitModalHandler = (e) => {
     const escKey = e.keyCode === 27;
 
@@ -16,12 +16,12 @@ const Backdrop = ({ onClick, onCloseExit }) => {
       role='backdrop-overlay'
       aria-label='Backdrop'
       className='backdrop'
-      onClick={onClick}
+      onClick={closeModal}
       onKeyDown={exitModalHandler}></div>
   );
 };
 
-const ModalOverlay = ({ onClick, setIsVisible, sendItemRequest, ...props }) => {
+const ModalOverlay = ({ closeModal, setIsVisible, sendItemRequest, ...props }) => {
   const sendRequestHandler = async (props) => {
     // todo: refactor the props shit...
     const { grossPrice, item, netProductPrice, taxAmount } = props;
@@ -81,7 +81,7 @@ const ModalOverlay = ({ onClick, setIsVisible, sendItemRequest, ...props }) => {
             <button type='submit' onClick={sendRequestHandler.bind(null, props)}>
               Register Item
             </button>
-            <button onClick={onClick}>cancel</button>
+            <button onClick={closeModal}>cancel</button>
           </footer>
         </article>
       </form>
@@ -91,13 +91,13 @@ const ModalOverlay = ({ onClick, setIsVisible, sendItemRequest, ...props }) => {
   return <>{calculatedContent}</>;
 };
 
-const ItemModal = ({ onClick, isVisible, setIsVisible, sendItemRequest, ...props }) => {
+const ItemModal = ({ closeModal, isVisible, setIsVisible, sendItemRequest, ...props }) => {
   let backDropContent = '';
   let modalOverlayContent = '';
 
   if (isVisible) {
     backDropContent = (
-      <>{createPortal(<Backdrop onClick={onClick} />, document.getElementById('backdrop-root'))}</>
+      <>{createPortal(<Backdrop closeModal={closeModal} />, document.getElementById('backdrop-root'))}</>
     );
   }
 
@@ -109,7 +109,7 @@ const ItemModal = ({ onClick, isVisible, setIsVisible, sendItemRequest, ...props
             {...props}
             sendItemRequest={sendItemRequest}
             setIsVisible={setIsVisible}
-            onClick={onClick}
+            closeModal={closeModal}
           />,
           document.getElementById('modal-overlay-root')
         )}
