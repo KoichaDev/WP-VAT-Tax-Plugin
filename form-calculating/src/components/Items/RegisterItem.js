@@ -25,79 +25,79 @@ const Backdrop = ({ closeModal, onCloseExit }) => {
 const ModalOverlay = ({ closeModal, onAddNotification, setIsVisible, sendItemRequest, ...props }) => {
   const itemCtx = useContext(ItemContext);
 
-  // const sendRequestHandler = async (props) => {
-  //   // todo: refactor the props shit...
-  //   const { grossPrice, item, netProductPrice, taxAmount } = props;
+  const sendRequestHandler = async (props) => {
+    const { id, productName, currency, grossProductPrice, netProductPrice, taxAmount, vatRate } = props;
 
-  //   const latestItem = item[item.length - 1];
-  //   const {
-  //     finalNetAmount,
-  //     id: targetId,
-  //     productName: targetProductName,
-  //     selectedToCurrency: targetCurrency,
-  //     vatRate: targetVatRate,
-  //   } = latestItem;
-  //   const baseUrl = gsReactScript.url;
-  //   const nonce = gsReactScript.nonce;
-  //   const url = `${baseUrl}/wp-json/cpt/v1/post-form-calculation?id=${targetId}&product-name=${targetProductName}&gross-price=${grossPrice}&tax-amount=${taxAmount}%25&net-amount=${netProductPrice}&vat-rate=${targetVatRate}%25&currency=${targetCurrency}`;
+    const baseUrl = gsReactScript.url;
+    const nonce = gsReactScript.nonce;
+    const url = `${baseUrl}/wp-json/cpt/v1/post-form-calculation?id=${id}&product-name=${productName}&gross-price=${grossProductPrice}&tax-amount=${taxAmount}%25&net-amount=${netProductPrice}&vat-rate=${vatRate}%25&currency=${currency}`;
 
-  //   const sentItem = sendItemRequest({
-  //     url,
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'X-WP-Nonce': nonce,
-  //     },
-  //     credentials: 'same-origin',
-  //     body: props,
-  //   });
+    const sentItem = sendItemRequest({
+      url,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-WP-Nonce': nonce,
+      },
+      credentials: 'same-origin',
+      body: props,
+    });
 
-  //   // We want to save the sentItem state as latestPost to use it in context for updating out notification component
-  //   // It let's the end user to see the post has been updated as well as they can click on the custom post type to see the content
-  //   sentItem.then((item) => {
-  //     // Lifting up the state
-  //     onAddNotification(item);
-  //     // Switching off the calculation modal
-  //     setIsVisible(false);
-  //   });
-  // };
+    // // We want to save the sentItem state as latestPost to use it in context for updating out notification component
+    // // It let's the end user to see the post has been updated as well as they can click on the custom post type to see the content
+    // sentItem.then((item) => {
+    //   // Lifting up the state
+    //   onAddNotification(item);
+    //   // Switching off the calculation modal
+    //   setIsVisible(false);
+    // });
+  };
+
+  const {
+    id,
+    productName,
+    enteredNetAmount,
+    convertedNetAmount,
+    currency,
+    grossProductPrice,
+    netProductPrice,
+    taxAmount,
+    vatRate,
+  } = itemCtx.item;
 
   let calculatedContent = '';
 
-  // Checking if there is any array item exist
-  if (itemCtx.item.length > 0) {
-    // const { grossPrice, item, netProductPrice, taxAmount } = props;
+  calculatedContent = (
+    <form className='modal' onSubmit={(e) => e.preventDefault()}>
+      <article>
+        <header>
+          <h2>Information</h2>
+        </header>
 
-    // const latestItem = item[item.length - 1];
-    // const { finalNetAmount, id, productName, selectedToCurrency, vatRate } = latestItem;
+        <div className='content'>
+          <p>Product Name: {productName}</p>
+          <p>Entered Net Amount: {enteredNetAmount}</p>
+          <p>
+            Converted Net amount: {convertedNetAmount} {currency.toUpperCase()}
+          </p>
+          <p>
+            Gross Price is: {grossProductPrice} {currency.toUpperCase()}
+          </p>
+          <p>
+            Net product price is: {netProductPrice} {currency.toUpperCase()}
+          </p>
+          <p>Tax Amount is: {taxAmount}%</p>
+        </div>
 
-    calculatedContent = (
-      <form className='modal' onSubmit={(e) => e.preventDefault()}>
-        <article>
-          <header>
-            <h2>Information</h2>
-          </header>
-
-          <div className='content'>
-            <p>
-              Gross Price is: {grossPrice} {selectedToCurrency.toUpperCase()}
-            </p>
-            <p>
-              Net product price is: {netProductPrice} {selectedToCurrency.toUpperCase()}
-            </p>
-            <p>Tax Amount is: {taxAmount}%</p>
-          </div>
-
-          <footer>
-            <button type='submit' onClick={sendRequestHandler.bind(null, props)}>
-              Register Item
-            </button>
-            <button onClick={closeModal}>cancel</button>
-          </footer>
-        </article>
-      </form>
-    );
-  }
+        <footer>
+          <button type='submit' onClick={sendRequestHandler.bind(null, itemCtx.item)}>
+            Register Item
+          </button>
+          <button onClick={closeModal}>cancel</button>
+        </footer>
+      </article>
+    </form>
+  );
 
   return <>{calculatedContent}</>;
 };
