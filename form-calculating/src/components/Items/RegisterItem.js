@@ -72,24 +72,33 @@ const ModalOverlay = ({ closeModal, onAddNotification, setIsVisible, sendItemReq
     <form className='modal' onSubmit={(e) => e.preventDefault()}>
       <article>
         <header>
-          <h2>Information</h2>
+          <h2>🧾 Information</h2>
         </header>
 
         <div className='content'>
-          <p>Product Name: {productName}</p>
           <p>
-            Entered Net Amount: {enteredNetAmount} {fromCurrency.toUpperCase()}
+            <strong>Product Name:</strong> {productName}
           </p>
           <p>
-            Converted Net amount: {convertedNetAmount} {toCurrency.toUpperCase()}
+            <strong>Entered Net Amount: </strong>
+            {enteredNetAmount} {fromCurrency.toUpperCase()}
           </p>
           <p>
-            Gross Price is: {grossProductPrice} {toCurrency.toUpperCase()}
+            <strong>Converted Net amount: </strong>
+            {convertedNetAmount} {toCurrency.toUpperCase()}
           </p>
           <p>
-            Net product price is: {netProductPrice} {toCurrency.toUpperCase()}
+            <strong>Gross Price is: </strong>
+            {grossProductPrice} {toCurrency.toUpperCase()}
           </p>
-          <p>Tax Amount is: {taxAmount}%</p>
+          <p>
+            <strong>Net product price is: </strong>
+            {netProductPrice} {toCurrency.toUpperCase()}
+          </p>
+          <p>
+            <strong> Tax Amount is: </strong>
+            {taxAmount}%
+          </p>
         </div>
 
         <footer className='modal__footer'>
