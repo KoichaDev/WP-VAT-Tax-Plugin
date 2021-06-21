@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { convertExchangePrice } from '../../calculate-items';
+import {
+  convertExchangePrice,
+  calculateGrossPrice,
+  calculateNetPrice,
+  calculateTaxAmount,
+} from '../../calculate-items';
 import ItemContext from './../../store/item-context';
 import AddProductName from './AddProducItem';
 import AddNetAmountItem from './AddNetAmountItem';
@@ -19,7 +24,8 @@ function AddItem({ onAddItem, isVisible, setIsVisible, onClick }) {
 
   const itemCtx = useContext(ItemContext);
 
-  const { enteredNetAmount, convertedNetAmount } = itemCtx.item;
+  const { enteredNetAmount, convertedNetAmount, vatRate } = itemCtx.item;
+
   // Looping through to get currencies Exhange from json file
   useEffect(() => {
     for (const currency in currencies) {
@@ -32,13 +38,12 @@ function AddItem({ onAddItem, isVisible, setIsVisible, onClick }) {
 
   // useEffect for handling source target to newly converted currency Exchange
   useEffect(() => {
-    currenciesExchange.forEach((currencyExchange) => {
+    currenciesExchange.map((currencyExchange) => {
       const { currency, priceExchange } = currencyExchange;
       if (selectedFromCurrency === currency) {
         // Targeting the currency to exchange from nok to pln for example
         const targetNewCurrency = priceExchange[selectedToCurrency];
         const newTargetValue = convertExchangePrice(enteredNetAmount, targetNewCurrency);
-
         itemCtx.setConvertedNetAmount({ newTargetValue });
       }
     });
@@ -60,14 +65,16 @@ function AddItem({ onAddItem, isVisible, setIsVisible, onClick }) {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    // Lifting up the state
-    onAddItem({
-      id: uuidv4(),
-      productName,
-      convertedNetAmount,
-      selectedToCurrency,
-      vatRate,
-    });
+    itemCtx.setId({ id: uuidv4() });
+    itemCtx.setCurrency({ selectedToCurrency });
+
+    const targetGrossPrice = calculateGrossPrice(convertedNetAmount, vatRate);
+    const targetTaxAmountPrice = calculateTaxAmount(targetGrossPrice, vatRate);
+    const targetNetProductPrice = calculateNetPrice(targetGrossPrice, targetTaxAmountPrice);
+
+    itemCtx.setGrossPrice({ targetGrossPrice });
+    itemCtx.setTaxAmountPrice({ targetTaxAmountPrice });
+    itemCtx.setNetProductPrice({ targetNetProductPrice });
   };
 
   return (
@@ -103,7 +110,6 @@ function AddItem({ onAddItem, isVisible, setIsVisible, onClick }) {
       />
 
       {/* Section for converting exchange from the source target of source Net amount  */}
-
       <div style={{ display: 'inline-block' }}>
         <FinalNetAmount />
 

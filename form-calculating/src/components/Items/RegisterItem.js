@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import ReactDOM, { createPortal } from 'react-dom';
+import ItemContext from './../../store/item-context';
 import './RegisterItem.scss';
 
 const Backdrop = ({ closeModal, onCloseExit }) => {
@@ -22,51 +23,53 @@ const Backdrop = ({ closeModal, onCloseExit }) => {
 };
 
 const ModalOverlay = ({ closeModal, onAddNotification, setIsVisible, sendItemRequest, ...props }) => {
-  const sendRequestHandler = async (props) => {
-    // todo: refactor the props shit...
-    const { grossPrice, item, netProductPrice, taxAmount } = props;
+  const itemCtx = useContext(ItemContext);
 
-    const latestItem = item[item.length - 1];
-    const {
-      finalNetAmount,
-      id: targetId,
-      productName: targetProductName,
-      selectedToCurrency: targetCurrency,
-      vatRate: targetVatRate,
-    } = latestItem;
-    const baseUrl = gsReactScript.url;
-    const nonce = gsReactScript.nonce;
-    const url = `${baseUrl}/wp-json/cpt/v1/post-form-calculation?id=${targetId}&product-name=${targetProductName}&gross-price=${grossPrice}&tax-amount=${taxAmount}%25&net-amount=${netProductPrice}&vat-rate=${targetVatRate}%25&currency=${targetCurrency}`;
+  // const sendRequestHandler = async (props) => {
+  //   // todo: refactor the props shit...
+  //   const { grossPrice, item, netProductPrice, taxAmount } = props;
 
-    const sentItem = sendItemRequest({
-      url,
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-WP-Nonce': nonce,
-      },
-      credentials: 'same-origin',
-      body: props,
-    });
+  //   const latestItem = item[item.length - 1];
+  //   const {
+  //     finalNetAmount,
+  //     id: targetId,
+  //     productName: targetProductName,
+  //     selectedToCurrency: targetCurrency,
+  //     vatRate: targetVatRate,
+  //   } = latestItem;
+  //   const baseUrl = gsReactScript.url;
+  //   const nonce = gsReactScript.nonce;
+  //   const url = `${baseUrl}/wp-json/cpt/v1/post-form-calculation?id=${targetId}&product-name=${targetProductName}&gross-price=${grossPrice}&tax-amount=${taxAmount}%25&net-amount=${netProductPrice}&vat-rate=${targetVatRate}%25&currency=${targetCurrency}`;
 
-    // We want to save the sentItem state as latestPost to use it in context for updating out notification component
-    // It let's the end user to see the post has been updated as well as they can click on the custom post type to see the content
-    sentItem.then((item) => {
-      // Lifting up the state
-      onAddNotification(item);
-      // Switching off the calculation modal
-      setIsVisible(false);
-    });
-  };
+  //   const sentItem = sendItemRequest({
+  //     url,
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'X-WP-Nonce': nonce,
+  //     },
+  //     credentials: 'same-origin',
+  //     body: props,
+  //   });
+
+  //   // We want to save the sentItem state as latestPost to use it in context for updating out notification component
+  //   // It let's the end user to see the post has been updated as well as they can click on the custom post type to see the content
+  //   sentItem.then((item) => {
+  //     // Lifting up the state
+  //     onAddNotification(item);
+  //     // Switching off the calculation modal
+  //     setIsVisible(false);
+  //   });
+  // };
 
   let calculatedContent = '';
 
   // Checking if there is any array item exist
-  if (props.item.length > 0) {
-    const { grossPrice, item, netProductPrice, taxAmount } = props;
+  if (itemCtx.item.length > 0) {
+    // const { grossPrice, item, netProductPrice, taxAmount } = props;
 
-    const latestItem = item[item.length - 1];
-    const { finalNetAmount, id, productName, selectedToCurrency, vatRate } = latestItem;
+    // const latestItem = item[item.length - 1];
+    // const { finalNetAmount, id, productName, selectedToCurrency, vatRate } = latestItem;
 
     calculatedContent = (
       <form className='modal' onSubmit={(e) => e.preventDefault()}>

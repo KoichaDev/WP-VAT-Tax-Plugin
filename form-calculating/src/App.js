@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import ItemProvider from './store/ItemProvider';
 import useHttp from './hooks/use-http';
-import { calculateGrossPrice, calculateNetPrice, calculateTaxAmount } from './calculate-items';
 import CalculateItem from './components/Items/CalculateItem';
 import Notification from './components/UI/Notification';
 import RegisterItem from './components/Items/RegisterItem';
@@ -16,26 +15,6 @@ function App() {
   const [targetGrossPrice, setTargetGrossPrice] = useState('');
   const [targetNetProductPrice, setTargetNetProductPrice] = useState('');
   const [targetTaxAmount, setTargetTaxAmount] = useState('');
-
-  const onAddItemHandler = (item) => {
-    setItem((prevItem) => [...prevItem, item]);
-
-    const {
-      id: targetId,
-      finalNetAmount: targetNetAmount,
-      productName: targetProductName,
-      selectedToCurrency: targetCurrency,
-      vatRate: targetVatRate,
-    } = item;
-
-    const finalGrossPrice = calculateGrossPrice(targetNetAmount, targetVatRate).toFixed(2);
-    const finalTaxAmountPrice = calculateTaxAmount(finalGrossPrice, targetVatRate).toFixed(2);
-    const finalNetProductPrice = calculateNetPrice(finalGrossPrice, finalTaxAmountPrice).toFixed(2);
-
-    setTargetGrossPrice(finalGrossPrice);
-    setTargetNetProductPrice(finalNetProductPrice);
-    setTargetTaxAmount(finalTaxAmountPrice);
-  };
 
   const calculateItemHandler = () => setIsVisible((prevIsVisible) => !prevIsVisible);
 
@@ -67,10 +46,10 @@ function App() {
   if (isVisible) {
     itemModalContent = (
       <RegisterItem
-        item={item}
-        grossPrice={targetGrossPrice}
-        netProductPrice={targetNetProductPrice}
-        taxAmount={targetTaxAmount}
+        // item={item}
+        // grossPrice={targetGrossPrice}
+        // netProductPrice={targetNetProductPrice}
+        // taxAmount={targetTaxAmount}
         closeModal={calculateItemHandler}
         isVisible={isVisible}
         setIsVisible={setIsVisible}
@@ -84,7 +63,7 @@ function App() {
     <ItemProvider>
       {notificationContent}
       <h1>Calculate Tax and Vat</h1>
-      <CalculateItem onAddItem={onAddItemHandler} isVisible={isVisible} onClick={calculateItemHandler} />
+      <CalculateItem isVisible={isVisible} onClick={calculateItemHandler} />
       {itemModalContent}
     </ItemProvider>
   );
