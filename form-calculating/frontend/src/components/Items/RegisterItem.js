@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import ReactDOM, { createPortal } from 'react-dom';
-import ItemContext from './../../store/item-context';
-import Button from './../UI/Button';
+import ItemContext from '../../store/item-context';
+import Button from '../UI/Button';
 import './RegisterItem.scss';
 
 const Backdrop = ({ closeModal, onCloseExit }) => {

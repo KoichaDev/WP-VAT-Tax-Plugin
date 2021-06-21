@@ -1,5 +1,5 @@
-form-calculating/.cache
-form-calculating/dist
-form-calculating/node_modules
+form-calculating/frontend/.cache
+form-calculating/frontend/dist
+form-calculating/frontend/node_modules
 
 index.php

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import ItemContext from './../../store/item-context';
+import ItemContext from '../../store/item-context';
 
 import './VatRateItem.scss';
 

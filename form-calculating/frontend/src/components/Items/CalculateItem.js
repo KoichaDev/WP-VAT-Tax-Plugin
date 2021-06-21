@@ -6,11 +6,11 @@ import {
   calculateNetPrice,
   calculateTaxAmount,
 } from '../../calculate-items';
-import ItemContext from './../../store/item-context';
+import ItemContext from '../../store/item-context';
 import AddProductName from './AddProducName';
 import AddNetAmountItem from './AddNetAmountItem';
 import AddCurrency from './AddCurrency';
-import Button from './../UI/Button';
+import Button from '../UI/Button';
 import currencies from '../../currencyExchange.json';
 import EqualIcon from '../Icons/EqualIcon';
 import ConvertedNetAmount from './ConvertedNetAmount';
