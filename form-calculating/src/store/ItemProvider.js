@@ -5,6 +5,7 @@ const ACTION = {
   ENTERED_PRODUCT_NAME: 'entered-product-name',
   ENTERED_NET_AMOUNT: 'entered-net-amount',
   CONVERTED_NET_AMOUNT: 'converted-net-amount',
+  SELECTED_VAT_RATE: 'vat-rate',
 };
 
 const itemReducer = (state, action) => {
@@ -15,6 +16,8 @@ const itemReducer = (state, action) => {
       return { ...state, enteredNetAmount: action.enteredNetAmount };
     case ACTION.CONVERTED_NET_AMOUNT:
       return { ...state, convertedNetAmount: action.newTargetValue };
+    case ACTION.SELECTED_VAT_RATE:
+      return { ...state, vatRate: action.vatRate };
     default:
       return state;
   }
@@ -24,11 +27,12 @@ const defaultItemState = {
   productName: '',
   enteredNetAmount: '',
   convertedNetAmount: '',
+  vatRate: 25,
 };
 
 function ItemProvider({ children }) {
   const [itemState, dispatchItemAction] = useReducer(itemReducer, defaultItemState);
-  //   console.log(itemState);
+  console.log(itemState);
   const productNameHandler = ({ enteredProductName }) => {
     dispatchItemAction({
       type: ACTION.ENTERED_PRODUCT_NAME,
@@ -50,6 +54,13 @@ function ItemProvider({ children }) {
     });
   };
 
+  const vatRateHandler = ({ vatRate }) => {
+    dispatchItemAction({
+      type: ACTION.SELECTED_VAT_RATE,
+      vatRate,
+    });
+  };
+
   const itemContext = {
     item: itemState,
     setEnteredProductName: productNameHandler,
@@ -57,7 +68,7 @@ function ItemProvider({ children }) {
     setConvertedNetAmount: convertedNetAmountPriceHandler,
     selectFromCurrency: (currency) => {},
     selectToCurrency: (currency) => {},
-    selectVatRate: (vatRateValue) => {},
+    selectVatRate: vatRateHandler,
   };
 
   return <ItemContext.Provider value={itemContext}>{children}</ItemContext.Provider>;

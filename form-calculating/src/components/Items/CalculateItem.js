@@ -17,8 +17,6 @@ function AddItem({ onAddItem, isVisible, setIsVisible, onClick }) {
   const [selectedToCurrency, setSelectedToCurrency] = useState('pln');
   const [currenciesExchange, setCurrenciesExchange] = useState([]);
 
-  const [vatRate, setVatRate] = useState(25);
-
   const itemCtx = useContext(ItemContext);
 
   const { enteredNetAmount, convertedNetAmount } = itemCtx.item;
@@ -54,8 +52,6 @@ function AddItem({ onAddItem, isVisible, setIsVisible, onClick }) {
       // setFinalNetAmount('');
     }
   }, [isVisible]);
-
-  const vatRateHandler = (e) => setVatRate(e.target.value);
 
   const currencyFromHandler = (e) => setSelectedFromCurrency(e.target.value);
 
@@ -123,7 +119,7 @@ function AddItem({ onAddItem, isVisible, setIsVisible, onClick }) {
         />
       </div>
 
-      <VatRateItem value={vatRate} onChange={vatRateHandler} />
+      <VatRateItem />
 
       <button
         type='submit'
