@@ -9,12 +9,8 @@ import './Form.scss';
 function App() {
   const { isLoading, error, sendRequest: sendItemRequest } = useHttp();
 
-  const [item, setItem] = useState([]);
   const [notificationContent, setNotificationContent] = useState(null);
   const [isVisible, setIsVisible] = useState(isLoading);
-  const [targetGrossPrice, setTargetGrossPrice] = useState('');
-  const [targetNetProductPrice, setTargetNetProductPrice] = useState('');
-  const [targetTaxAmount, setTargetTaxAmount] = useState('');
 
   const calculateItemHandler = () => setIsVisible((prevIsVisible) => !prevIsVisible);
 
@@ -46,10 +42,6 @@ function App() {
   if (isVisible) {
     itemModalContent = (
       <RegisterItem
-        // item={item}
-        // grossPrice={targetGrossPrice}
-        // netProductPrice={targetNetProductPrice}
-        // taxAmount={targetTaxAmount}
         closeModal={calculateItemHandler}
         isVisible={isVisible}
         setIsVisible={setIsVisible}

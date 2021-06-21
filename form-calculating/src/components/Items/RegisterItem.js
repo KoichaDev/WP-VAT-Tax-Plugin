@@ -22,7 +22,7 @@ const Backdrop = ({ closeModal, onCloseExit }) => {
   );
 };
 
-const ModalOverlay = ({ closeModal, onAddNotification, setIsVisible, sendItemRequest, ...props }) => {
+const ModalOverlay = ({ closeModal, onAddNotification, setIsVisible, sendItemRequest }) => {
   const itemCtx = useContext(ItemContext);
 
   const sendRequestHandler = async (props) => {
@@ -43,18 +43,17 @@ const ModalOverlay = ({ closeModal, onAddNotification, setIsVisible, sendItemReq
       body: props,
     });
 
-    // // We want to save the sentItem state as latestPost to use it in context for updating out notification component
-    // // It let's the end user to see the post has been updated as well as they can click on the custom post type to see the content
-    // sentItem.then((item) => {
-    //   // Lifting up the state
-    //   onAddNotification(item);
-    //   // Switching off the calculation modal
-    //   setIsVisible(false);
-    // });
+    // We want to save the sentItem state as latestPost to use it in context for updating out notification component
+    // It let's the end user to see the post has been updated as well as they can click on the custom post type to see the content
+    sentItem.then((item) => {
+      // Lifting up the state for notification Component
+      onAddNotification(item);
+      // Switching off the calculation register item modal
+      setIsVisible(false);
+    });
   };
 
   const {
-    id,
     productName,
     enteredNetAmount,
     convertedNetAmount,
