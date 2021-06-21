@@ -1,5 +1,7 @@
 import React, { createContext } from 'react';
 
+// This is used for IDE code hinting
+
 const ItemContext = createContext({
   setId: (id) => {},
   setEnteredProductName: (productValue) => {},
