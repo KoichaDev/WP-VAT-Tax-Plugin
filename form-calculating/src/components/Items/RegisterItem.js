@@ -27,11 +27,10 @@ const ModalOverlay = ({ closeModal, onAddNotification, setIsVisible, sendItemReq
   const itemCtx = useContext(ItemContext);
 
   const sendRequestHandler = async (props) => {
-    const { id, productName, currency, grossProductPrice, netProductPrice, taxAmount, vatRate } = props;
-
+    const { id, productName, toCurrency, grossProductPrice, netProductPrice, taxAmount, vatRate } = props;
     const baseUrl = gsReactScript.url;
     const nonce = gsReactScript.nonce;
-    const url = `${baseUrl}/wp-json/cpt/v1/post-form-calculation?id=${id}&product-name=${productName}&gross-price=${grossProductPrice}&tax-amount=${taxAmount}%25&net-amount=${netProductPrice}&vat-rate=${vatRate}%25&currency=${currency}`;
+    const url = `${baseUrl}/wp-json/cpt/v1/post-form-calculation?id=${id}&product-name=${productName}&gross-price=${grossProductPrice}&tax-amount=${taxAmount}%25&net-amount=${netProductPrice}&vat-rate=${vatRate}%25&currency=${toCurrency}`;
 
     const sentItem = sendItemRequest({
       url,
@@ -49,10 +48,11 @@ const ModalOverlay = ({ closeModal, onAddNotification, setIsVisible, sendItemReq
     sentItem.then((item) => {
       // Lifting up the state for notification Component
       onAddNotification(item);
-      // Switching off the calculation register item modal
-
       // Reset input field to empty string after submitting the form
+      const enteredProductName = productName.replace(productName, '');
+      itemCtx.setEnteredProductName({ enteredProductName });
 
+      // Switching off the calculation register item modal
       setIsVisible(false);
     });
   };

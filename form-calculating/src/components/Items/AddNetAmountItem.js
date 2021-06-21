@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import ItemContext from './../../store/item-context';
 import Input from '../UI/Input';
 
-function AddNetAmountItem({}, ref) {
+function AddNetAmountItem() {
   const [enteredNetAmount, setEnteredNetAmount] = useState('');
 
   const itemCtx = useContext(ItemContext);

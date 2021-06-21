@@ -23,7 +23,7 @@ const itemReducer = (state, action) => {
     case ACTION.ENTERED_NET_AMOUNT:
       return { ...state, enteredNetAmount: action.enteredNetAmount };
     case ACTION.CONVERTED_NET_AMOUNT:
-      return { ...state, convertedNetAmount: action.newTargetValue };
+      return { ...state, convertedNetAmount: Number(action.newTargetValue.toFixed(2)) };
     case ACTION.SELECTED_FROM_CURRENCY:
       return { ...state, fromCurrency: action.selectedFromCurrency };
     case ACTION.SELECTED_TO_CURRENCY:
@@ -31,11 +31,11 @@ const itemReducer = (state, action) => {
     case ACTION.SELECTED_VAT_RATE:
       return { ...state, vatRate: action.vatRate };
     case ACTION.ENTERED_GROSS_PRODUCT_PRICE:
-      return { ...state, grossProductPrice: action.targetGrossPrice };
+      return { ...state, grossProductPrice: Number(action.targetGrossPrice.toFixed(2)) };
     case ACTION.ENTERED_NET_PRODUCT_PRICE:
-      return { ...state, netProductPrice: action.targetNetProductPrice };
+      return { ...state, netProductPrice: Number(action.targetNetProductPrice.toFixed(2)) };
     case ACTION.ENTERED_TAX_AMOUNT:
-      return { ...state, taxAmount: action.targetTaxAmountPrice };
+      return { ...state, taxAmount: Number(action.targetTaxAmountPrice.toFixed(2)) };
     default:
       return state;
   }
