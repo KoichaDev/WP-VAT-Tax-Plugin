@@ -30,7 +30,7 @@ const ModalOverlay = ({ closeModal, onAddNotification, setIsVisible, sendItemReq
     const { id, productName, toCurrency, grossProductPrice, netProductPrice, taxAmount, vatRate } = props;
     const baseUrl = gsReactScript.url;
     const nonce = gsReactScript.nonce;
-    const url = `${baseUrl}/wp-json/cpt/v1/post-form-calculation?id=${id}&product-name=${productName}&gross-price=${grossProductPrice}&tax-amount=${taxAmount}%25&net-amount=${netProductPrice}&vat-rate=${vatRate}%25&currency=${toCurrency}`;
+    const url = `${baseUrl}/wp-json/cpt/v1/post-form-calculation?id=${id}&product-name=${productName}&gross-price=${grossProductPrice}&tax-amount=${taxAmount}&net-amount=${netProductPrice}&vat-rate=${vatRate}%25&currency=${toCurrency.toUpperCase()}`;
 
     const sentItem = sendItemRequest({
       url,
@@ -77,32 +77,32 @@ const ModalOverlay = ({ closeModal, onAddNotification, setIsVisible, sendItemReq
         <header>
           <h2>🧾 Information</h2>
         </header>
-
-        <div className='content'>
-          <p>
-            <strong>Product Name:</strong> {productName}
-          </p>
-          <p>
-            <strong>Entered Net Amount: </strong>
-            {enteredNetAmount} {fromCurrency.toUpperCase()}
-          </p>
-          <p>
-            <strong>Converted Net amount: </strong>
-            {convertedNetAmount} {toCurrency.toUpperCase()}
-          </p>
-          <p>
-            <strong>Gross Price is: </strong>
-            {grossProductPrice} {toCurrency.toUpperCase()}
-          </p>
-          <p>
-            <strong>Net product price is: </strong>
-            {netProductPrice} {toCurrency.toUpperCase()}
-          </p>
-          <p>
-            <strong> Tax Amount is: </strong>
-            {taxAmount}%
-          </p>
-        </div>
+        <p>
+          <strong>Product Name:</strong> {productName}
+        </p>
+        <p>
+          <strong>Entered Net Amount: </strong>
+          {enteredNetAmount} {fromCurrency.toUpperCase()}
+        </p>
+        <p>
+          <strong>Converted Net amount: </strong>
+          {convertedNetAmount} {toCurrency.toUpperCase()}
+        </p>
+        <p>
+          <strong>Vat Rate: </strong> {vatRate}%
+        </p>
+        <p>
+          <strong>Gross Price is: </strong>
+          {grossProductPrice} {toCurrency.toUpperCase()}
+        </p>
+        <p>
+          <strong>Net product price is: </strong>
+          {netProductPrice} {toCurrency.toUpperCase()}
+        </p>
+        <p>
+          <strong> Tax Amount is: </strong>
+          {taxAmount} {toCurrency.toUpperCase()}
+        </p>
 
         <footer className='modal__footer'>
           <Button

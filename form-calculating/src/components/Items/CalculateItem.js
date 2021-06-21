@@ -13,7 +13,7 @@ import AddCurrency from './AddCurrency';
 import Button from './../UI/Button';
 import currencies from '../../currencyExchange.json';
 import EqualIcon from '../Icons/EqualIcon';
-import FinalNetAmount from './FinalNetAmountItem';
+import ConvertedNetAmount from './ConvertedNetAmount';
 import Form from '../UI/Form';
 import VatRateItem from './VatRateItem';
 import './CalculateItem.scss';
@@ -108,7 +108,7 @@ function AddItem({ onClick }) {
 
       {/* Section for converting exchange from the source target of source Net amount  */}
       <div style={{ display: 'inline-block' }}>
-        <FinalNetAmount />
+        <ConvertedNetAmount />
 
         <AddCurrency
           label={{

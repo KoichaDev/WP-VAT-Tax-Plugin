@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import ItemContext from './../../store/item-context';
+import ItemContext from '../../store/item-context';
 import Input from '../UI/Input';
-import './FinalNetAmountItem.scss';
+import './ConvertedNetAmount.scss';
 
-function FinalNetAmount() {
+function ConvertedNetAmount() {
   const { convertedNetAmount } = useContext(ItemContext).item;
   return (
     <Input
@@ -14,8 +14,7 @@ function FinalNetAmount() {
       input={{
         type: 'number',
         id: 'converted-input-currency',
-        value: convertedNetAmount.toString().replace('0', ''),
-        step: '0.01',
+        value: convertedNetAmount,
         placeholder: 'Will be Converted',
         'aria-label': 'Converted exchange',
         'aria-describedby': 'Target net amount will be converted to new value',
@@ -25,4 +24,4 @@ function FinalNetAmount() {
   );
 }
 
-export default FinalNetAmount;
+export default ConvertedNetAmount;
