@@ -1,0 +1,40 @@
+.btn {
+  display: block;
+  background: #007bff;
+  color: #fff;
+  padding: 5px;
+  margin: 1em 3px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    background: #036cdd;
+  }
+
+  &.btn--success {
+    background: #28a745;
+
+    &:hover {
+      background: #38ca5a;
+    }
+  }
+
+  &.btn--warning {
+    background: #ffc107;
+    color: #212529;
+
+    &:hover {
+      background: #ffc61c;
+    }
+  }
+
+  &.btn--danger {
+    background: #dc3545;
+
+    &:hover {
+      background: rgb(180, 54, 67);
+    }
+  }
+}

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import ReactDOM, { createPortal } from 'react-dom';
 import ItemContext from './../../store/item-context';
+import Button from './../UI/Button';
 import './RegisterItem.scss';
 
 const Backdrop = ({ closeModal, onCloseExit }) => {
@@ -91,11 +92,22 @@ const ModalOverlay = ({ closeModal, onAddNotification, setIsVisible, sendItemReq
           <p>Tax Amount is: {taxAmount}%</p>
         </div>
 
-        <footer>
-          <button type='submit' onClick={sendRequestHandler.bind(null, itemCtx.item)}>
-            Register Item
-          </button>
-          <button onClick={closeModal}>cancel</button>
+        <footer className='modal__footer'>
+          <Button
+            button={{
+              type: 'submit',
+              className: 'btn',
+              onClick: sendRequestHandler.bind(null, itemCtx.item),
+            }}>
+            <strong>🚀 Register Item </strong>
+          </Button>
+          <Button
+            button={{
+              onClick: closeModal,
+              className: 'btn btn--warning',
+            }}>
+            <strong>❌ CANCEL </strong>
+          </Button>
         </footer>
       </article>
     </form>

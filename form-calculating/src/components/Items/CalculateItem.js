@@ -10,6 +10,7 @@ import ItemContext from './../../store/item-context';
 import AddProductName from './AddProducName';
 import AddNetAmountItem from './AddNetAmountItem';
 import AddCurrency from './AddCurrency';
+import Button from './../UI/Button';
 import currencies from '../../currencyExchange.json';
 import EqualIcon from '../Icons/EqualIcon';
 import FinalNetAmount from './FinalNetAmountItem';
@@ -136,21 +137,22 @@ function AddItem({ isVisible, onClick }) {
 
       <VatRateItem />
 
-      <button
-        type='submit'
-        className={disabledAttrButton ? 'btn btn--warning' : 'btn'}
-        aria-label='Calculate the registered item'
-        aria-describedby='Open a new window to display the calculated information before registering the item'
-        aria-modal='true'
-        title={
-          disabledAttrButton
+      <Button
+        button={{
+          type: 'submit',
+          className: disabledAttrButton ? 'btn btn--danger' : 'btn btn--success',
+          'aria-label': 'Calculate the registered item',
+          'aria-describedby':
+            'Open a new window to display the calculated information before registering the item',
+          'aria-modal': 'true',
+          title: disabledAttrButton
             ? 'Add Item first before you can submit the button'
-            : 'Calculate the registered item'
-        }
-        onClick={onClick}
-        disabled={disabledAttrButton}>
+            : 'Calculate the registered item',
+          onClick: onClick,
+          disabled: disabledAttrButton,
+        }}>
         {disabledAttrButton ? '⚠️ Add Item First' : 'Calculate'}
-      </button>
+      </Button>
     </Form>
   );
 }
