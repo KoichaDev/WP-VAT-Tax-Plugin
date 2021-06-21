@@ -8,7 +8,7 @@ function AddNetAmountItem() {
   const itemCtx = useContext(ItemContext);
 
   useEffect(() => {
-    itemCtx.enteredNetAmount({ enteredNetAmount });
+    itemCtx.setEnteredNetAmount({ enteredNetAmount });
   }, [enteredNetAmount]);
 
   const amountFromNetHandler = (e) => setEnteredNetAmount(parseFloat(e.target.value));

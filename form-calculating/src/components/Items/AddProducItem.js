@@ -8,7 +8,7 @@ function AddProductName() {
   const itemCtx = useContext(ItemContext);
 
   useEffect(() => {
-    itemCtx.enteredProductName({ enteredProductName });
+    itemCtx.setEnteredProductName({ enteredProductName });
   }, [enteredProductName]);
 
   const enteredProductHandler = (e) => setEnteredProductName(e.target.value);

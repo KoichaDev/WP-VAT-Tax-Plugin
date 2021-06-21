@@ -4,6 +4,7 @@ import ItemContext from './item-context';
 const ACTION = {
   ENTERED_PRODUCT_NAME: 'entered-product-name',
   ENTERED_NET_AMOUNT: 'entered-net-amount',
+  CONVERTED_NET_AMOUNT: 'converted-net-amount',
 };
 
 const itemReducer = (state, action) => {
@@ -12,6 +13,8 @@ const itemReducer = (state, action) => {
       return { ...state, productName: action.enteredProductName };
     case ACTION.ENTERED_NET_AMOUNT:
       return { ...state, enteredNetAmount: action.enteredNetAmount };
+    case ACTION.CONVERTED_NET_AMOUNT:
+      return { ...state, convertedNetAmount: action.newTargetValue };
     default:
       return state;
   }
@@ -19,12 +22,13 @@ const itemReducer = (state, action) => {
 
 const defaultItemState = {
   productName: '',
-  enteredNetAmount: 0,
+  enteredNetAmount: '',
+  convertedNetAmount: '',
 };
 
 function ItemProvider({ children }) {
   const [itemState, dispatchItemAction] = useReducer(itemReducer, defaultItemState);
-
+  //   console.log(itemState);
   const productNameHandler = ({ enteredProductName }) => {
     dispatchItemAction({
       type: ACTION.ENTERED_PRODUCT_NAME,
@@ -33,21 +37,27 @@ function ItemProvider({ children }) {
   };
 
   const netAmountPriceHandler = ({ enteredNetAmount }) => {
-    console.log(enteredNetAmount);
     dispatchItemAction({
       type: ACTION.ENTERED_NET_AMOUNT,
       enteredNetAmount,
     });
   };
 
+  const convertedNetAmountPriceHandler = ({ newTargetValue }) => {
+    dispatchItemAction({
+      type: ACTION.CONVERTED_NET_AMOUNT,
+      newTargetValue,
+    });
+  };
+
   const itemContext = {
     item: itemState,
-    enteredProductName: productNameHandler,
-    enteredNetAmount: netAmountPriceHandler,
-    selectVatRate: (vatRateValue) => {},
-    finalNetAmount: (finalNetAmountValue) => {},
+    setEnteredProductName: productNameHandler,
+    setEnteredNetAmount: netAmountPriceHandler,
+    setConvertedNetAmount: convertedNetAmountPriceHandler,
     selectFromCurrency: (currency) => {},
     selectToCurrency: (currency) => {},
+    selectVatRate: (vatRateValue) => {},
   };
 
   return <ItemContext.Provider value={itemContext}>{children}</ItemContext.Provider>;

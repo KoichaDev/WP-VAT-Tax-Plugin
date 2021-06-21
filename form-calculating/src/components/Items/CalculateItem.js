@@ -13,18 +13,15 @@ import VatRateItem from './VatRateItem';
 import './CalculateItem.scss';
 
 function AddItem({ onAddItem, isVisible, setIsVisible, onClick }) {
-  const [finalNetAmount, setFinalNetAmount] = useState('');
-
   const [selectedFromCurrency, setSelectedFromCurrency] = useState('nok');
   const [selectedToCurrency, setSelectedToCurrency] = useState('pln');
   const [currenciesExchange, setCurrenciesExchange] = useState([]);
 
   const [vatRate, setVatRate] = useState(25);
 
-  const { enteredNetAmount } = useContext(ItemContext).item;
+  const itemCtx = useContext(ItemContext);
 
-  // const {} = itemCtx.item;
-
+  const { enteredNetAmount, convertedNetAmount } = itemCtx.item;
   // Looping through to get currencies Exhange from json file
   useEffect(() => {
     for (const currency in currencies) {
@@ -37,14 +34,14 @@ function AddItem({ onAddItem, isVisible, setIsVisible, onClick }) {
 
   // useEffect for handling source target to newly converted currency Exchange
   useEffect(() => {
-    currenciesExchange.map((currencyExchange) => {
+    currenciesExchange.forEach((currencyExchange) => {
       const { currency, priceExchange } = currencyExchange;
       if (selectedFromCurrency === currency) {
         // Targeting the currency to exchange from nok to pln for example
         const targetNewCurrency = priceExchange[selectedToCurrency];
         const newTargetValue = convertExchangePrice(enteredNetAmount, targetNewCurrency);
 
-        setFinalNetAmount(newTargetValue);
+        itemCtx.setConvertedNetAmount({ newTargetValue });
       }
     });
   }, [enteredNetAmount, selectedFromCurrency, selectedToCurrency]);
@@ -54,11 +51,9 @@ function AddItem({ onAddItem, isVisible, setIsVisible, onClick }) {
     if (!isVisible) {
       // setProductName('');
       // setEnterNetAmount('');
-      setFinalNetAmount('');
+      // setFinalNetAmount('');
     }
   }, [isVisible]);
-
-  const amountToNetHandler = (e) => setFinalNetAmount(parseFloat(e.target.value));
 
   const vatRateHandler = (e) => setVatRate(e.target.value);
 
@@ -73,7 +68,7 @@ function AddItem({ onAddItem, isVisible, setIsVisible, onClick }) {
     onAddItem({
       id: uuidv4(),
       productName,
-      finalNetAmount,
+      convertedNetAmount,
       selectedToCurrency,
       vatRate,
     });
@@ -114,7 +109,7 @@ function AddItem({ onAddItem, isVisible, setIsVisible, onClick }) {
       {/* Section for converting exchange from the source target of source Net amount  */}
 
       <div style={{ display: 'inline-block' }}>
-        <FinalNetAmount value={finalNetAmount} onChange={amountToNetHandler} />
+        <FinalNetAmount />
 
         <AddCurrency
           label={{

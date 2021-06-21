@@ -1,9 +1,9 @@
 import React, { createContext } from 'react';
 
 const ItemContext = createContext({
-  enteredProductName: (productValue) => {},
-  enteredNetAmount: (netAmountValue) => {},
-  finalNetAmount: (finalNetAmountValue) => {},
+  setEnteredProductName: (productValue) => {},
+  setEnteredNetAmount: (netAmountValue) => {},
+  setConvertedNetAmount: (convertedValue) => {},
   selectFromCurrency: (currency) => {},
   selectToCurrency: (currency) => {},
   selectVatRate: (vatRateValue) => {},
