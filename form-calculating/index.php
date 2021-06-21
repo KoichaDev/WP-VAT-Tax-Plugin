@@ -30,21 +30,12 @@ include_once('inc/api/get_route.php');
 
 include_once('inc/api/post_route.php');
 
-include_once('inc/custom-post-types/cpt_form_calculation.php');
+include_once('inc/custom-post-types/form-tax-vat-calculation.php');
 
-include_once('inc/custom-plugin/menu_dashboard.php');
+include_once('inc/enqueue-style-and-scripts/enqueue-script-and-styles.php');
 
-include_once('inc/enqueue-style-and-scripts/enqueue_react_script.php');
+include_once('inc/menu-dashboard/menu-dashboard.php');
 
-include_once('inc/shortcodes/cost-calculator.php');
+include_once('inc/rewrite-rules/custom-rewrite-rules.php');
 
-// ! This is to automatic flushing of the WordPress rewrite rules
-// ! Ideally, this is not optimal to do it, since it's an expensive operation so it should only be used when necessary.
-// ! Since this is a testing assignment purpose, I just to ensure that the CPT is actually working without 
-// ! you have go to settings -> permalinks -> save changes in order to let the CPT work
-// ! Source: https://developer.wordpress.org/reference/functions/flush_rewrite_rules/
-
-function custom_rewrite_rules() {
-    flush_rewrite_rules();
-}
-add_action('init', 'custom_rewrite_rules');
+include_once('inc/shortcode/react-shortcode-calculator.php');

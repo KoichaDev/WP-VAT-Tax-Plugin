@@ -1,22 +1,7 @@
 <?php
 
-
-function script_defer($url) {
-    if (is_admin()) {
-        return $url; //don't break WP Admin
-    }
-
-    if (false === strpos($url, '.js')) {
-        return $url;
-    }
-
-    if (strpos($url, 'jquery.js')) {
-        return $url;
-    }
-    return str_replace(' src', ' defer src', $url);
-}
-
-function enqueue_react_script() {
+// 
+function enqueue_script_and_styles() {
     if (basename($_SERVER['REQUEST_URI']) === 'admin.php?page=calculate_tax_vat') {
         $file_to_js = dirname(plugin_dir_url(__DIR__), 1) . '/dist/index.js';
         $file_to_css = dirname(plugin_dir_url(__DIR__), 1) . '/dist/index.css';
@@ -34,5 +19,4 @@ function enqueue_react_script() {
     }
 }
 
-add_filter('script_loader_tag', 'script_defer', 10);
-add_action('admin_enqueue_scripts', 'enqueue_react_script');
+add_action('admin_enqueue_scripts', 'enqueue_script_and_styles');
