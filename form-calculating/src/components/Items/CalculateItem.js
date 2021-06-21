@@ -23,11 +23,15 @@ function AddItem({ isVisible, onClick }) {
   const [currenciesExchange, setCurrenciesExchange] = useState([]);
 
   const itemCtx = useContext(ItemContext);
-  const addProductNameRef = useRef(null);
-  const addNetAmountItemRef = useRef(null);
-  const convertedNetAmountRef = useRef(null);
+  const addProductNameRef = useRef('');
+  const addNetAmountItemRef = useRef('');
+  const convertedNetAmountRef = useRef('');
 
-  const { enteredNetAmount, convertedNetAmount, vatRate } = itemCtx.item;
+  const { productName, enteredNetAmount, convertedNetAmount, vatRate } = itemCtx.item;
+
+  // Adding attribute button to disable
+  const disabledAttrButton =
+    enteredNetAmount.toString().length === 0 || productName.length === 0 ? 'disabled' : '';
 
   // Looping through to get currencies Exhange from json file
   useEffect(() => {
@@ -134,13 +138,18 @@ function AddItem({ isVisible, onClick }) {
 
       <button
         type='submit'
-        className='btn'
+        className={disabledAttrButton ? 'btn btn--warning' : 'btn'}
         aria-label='Calculate the registered item'
         aria-describedby='Open a new window to display the calculated information before registering the item'
         aria-modal='true'
-        title='Calculate the registered item'
-        onClick={onClick}>
-        Calculate
+        title={
+          disabledAttrButton
+            ? 'Add Item first before you can submit the button'
+            : 'Calculate the registered item'
+        }
+        onClick={onClick}
+        disabled={disabledAttrButton}>
+        {disabledAttrButton ? '⚠️ Add Item First' : 'Calculate'}
       </button>
     </Form>
   );

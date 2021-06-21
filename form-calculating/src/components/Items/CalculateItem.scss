@@ -25,4 +25,12 @@
   &:hover {
     background: #036cdd;
   }
+
+  &.btn--warning {
+    background: #dc3545;
+
+    &:hover {
+      background: rgb(180, 54, 67);
+    }
+  }
 }

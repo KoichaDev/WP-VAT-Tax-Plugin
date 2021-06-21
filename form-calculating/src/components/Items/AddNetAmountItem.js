@@ -11,7 +11,7 @@ function AddNetAmountItem({}, ref) {
     itemCtx.setEnteredNetAmount({ enteredNetAmount });
   }, [enteredNetAmount]);
 
-  const amountFromNetHandler = (e) => setEnteredNetAmount(parseFloat(e.target.value));
+  const amountFromNetHandler = (e) => setEnteredNetAmount(e.target.value);
 
   return (
     <Input

@@ -4,8 +4,7 @@ import Input from '../UI/Input';
 import './FinalNetAmountItem.scss';
 
 function FinalNetAmount({}, ref) {
-  const itemCtx = useContext(ItemContext);
-
+  const { convertedNetAmount } = useContext(ItemContext).item;
   return (
     <Input
       label={{
@@ -16,7 +15,7 @@ function FinalNetAmount({}, ref) {
         ref: ref,
         type: 'number',
         id: 'converted-input-currency',
-        value: itemCtx.item.convertedNetAmount,
+        value: convertedNetAmount.toString().replace('0', ''),
         step: '0.01',
         placeholder: 'Will be Converted',
         'aria-label': 'Converted exchange',
