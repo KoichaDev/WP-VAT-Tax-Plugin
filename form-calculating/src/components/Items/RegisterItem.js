@@ -57,7 +57,8 @@ const ModalOverlay = ({ closeModal, onAddNotification, setIsVisible, sendItemReq
     productName,
     enteredNetAmount,
     convertedNetAmount,
-    currency,
+    fromCurrency,
+    toCurrency,
     grossProductPrice,
     netProductPrice,
     taxAmount,
@@ -75,15 +76,17 @@ const ModalOverlay = ({ closeModal, onAddNotification, setIsVisible, sendItemReq
 
         <div className='content'>
           <p>Product Name: {productName}</p>
-          <p>Entered Net Amount: {enteredNetAmount}</p>
           <p>
-            Converted Net amount: {convertedNetAmount} {currency.toUpperCase()}
+            Entered Net Amount: {enteredNetAmount} {fromCurrency.toUpperCase()}
           </p>
           <p>
-            Gross Price is: {grossProductPrice} {currency.toUpperCase()}
+            Converted Net amount: {convertedNetAmount} {toCurrency.toUpperCase()}
           </p>
           <p>
-            Net product price is: {netProductPrice} {currency.toUpperCase()}
+            Gross Price is: {grossProductPrice} {toCurrency.toUpperCase()}
+          </p>
+          <p>
+            Net product price is: {netProductPrice} {toCurrency.toUpperCase()}
           </p>
           <p>Tax Amount is: {taxAmount}%</p>
         </div>

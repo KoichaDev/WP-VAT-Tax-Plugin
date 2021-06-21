@@ -70,7 +70,8 @@ function AddItem({ isVisible, onClick }) {
     e.preventDefault();
 
     itemCtx.setId({ id: uuidv4() });
-    itemCtx.setCurrency({ selectedToCurrency });
+    itemCtx.setFromCurrency({ selectedFromCurrency });
+    itemCtx.setToCurrency({ selectedToCurrency });
 
     const targetGrossPrice = calculateGrossPrice(convertedNetAmount, vatRate);
     const targetTaxAmountPrice = calculateTaxAmount(targetGrossPrice, vatRate);

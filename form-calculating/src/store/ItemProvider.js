@@ -6,6 +6,7 @@ const ACTION = {
   ENTERED_PRODUCT_NAME: 'entered-product-name',
   ENTERED_NET_AMOUNT: 'entered-net-amount',
   CONVERTED_NET_AMOUNT: 'converted-net-amount',
+  SELECTED_FROM_CURRENCY: 'selected-from-currency',
   SELECTED_TO_CURRENCY: 'selected-to-currency',
   SELECTED_VAT_RATE: 'vat-rate',
   ENTERED_GROSS_PRODUCT_PRICE: 'gross-price',
@@ -23,8 +24,10 @@ const itemReducer = (state, action) => {
       return { ...state, enteredNetAmount: action.enteredNetAmount };
     case ACTION.CONVERTED_NET_AMOUNT:
       return { ...state, convertedNetAmount: action.newTargetValue };
+    case ACTION.SELECTED_FROM_CURRENCY:
+      return { ...state, fromCurrency: action.selectedFromCurrency };
     case ACTION.SELECTED_TO_CURRENCY:
-      return { ...state, currency: action.selectedToCurrency };
+      return { ...state, toCurrency: action.selectedToCurrency };
     case ACTION.SELECTED_VAT_RATE:
       return { ...state, vatRate: action.vatRate };
     case ACTION.ENTERED_GROSS_PRODUCT_PRICE:
@@ -43,7 +46,8 @@ const defaultItemState = {
   productName: '',
   enteredNetAmount: '',
   convertedNetAmount: '',
-  currency: 'pln',
+  fromCurrency: 'nok',
+  toCurrency: 'pln',
   grossProductPrice: '',
   netProductPrice: '',
   taxAmount: '',
@@ -81,9 +85,16 @@ function ItemProvider({ children }) {
     });
   };
 
-  const setCurrencyHandler = ({ selectedToCurrency }) => {
+  const fromCurrencyHandler = ({ selectedFromCurrency }) => {
     dispatchItemAction({
-      type: ACTION.SELECTED_CURRENCY,
+      type: ACTION.SELECTED_FROM_CURRENCY,
+      selectedFromCurrency,
+    });
+  };
+
+  const toCurrencyHandler = ({ selectedToCurrency }) => {
+    dispatchItemAction({
+      type: ACTION.SELECTED_TO_CURRENCY,
       selectedToCurrency,
     });
   };
@@ -123,7 +134,8 @@ function ItemProvider({ children }) {
     setEnteredNetAmount: netAmountPriceHandler,
     setConvertedNetAmount: convertedNetAmountPriceHandler,
     selectVatRate: vatRateHandler,
-    setCurrency: setCurrencyHandler,
+    setFromCurrency: fromCurrencyHandler,
+    setToCurrency: toCurrencyHandler,
     setGrossPrice: grossPriceHandler,
     setTaxAmountPrice: taxAmountPriceHandler,
     setNetProductPrice: netProductPriceHandler,
