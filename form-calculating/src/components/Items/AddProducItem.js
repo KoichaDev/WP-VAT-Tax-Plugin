@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import ItemContext from './../../store/item-context';
 import Input from './../UI/Input';
 import './AddProductItem.scss';
 
-function AddProductName({ onChange, value }) {
+function AddProductName() {
+  const [productName, setProductName] = useState('');
+  const itemCtx = useContext(ItemContext);
+
+  useEffect(() => {
+    itemCtx.enteredProductName({ productName });
+  }, [productName]);
+
+  const enteredProductHandler = (e) => setProductName(e.target.value);
+
   return (
     <Input
       label={{
@@ -14,8 +24,8 @@ function AddProductName({ onChange, value }) {
         id: 'product-name',
         className: 'form__product-input',
         placeholder: 'Enter a product name',
-        value: value,
-        onChange: onChange,
+        value: productName,
+        onChange: enteredProductHandler,
         required: 'required',
       }}
     />

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import ItemProvider from './store/ItemProvider';
 import useHttp from './hooks/use-http';
 import { calculateGrossPrice, calculateNetPrice, calculateTaxAmount } from './calculate-items';
 import CalculateItem from './components/Items/CalculateItem';
@@ -80,12 +81,12 @@ function App() {
   }
 
   return (
-    <>
+    <ItemProvider>
       {notificationContent}
       <h1>Calculate Tax and Vat</h1>
       <CalculateItem onAddItem={onAddItemHandler} isVisible={isVisible} onClick={calculateItemHandler} />
       {itemModalContent}
-    </>
+    </ItemProvider>
   );
 }
 

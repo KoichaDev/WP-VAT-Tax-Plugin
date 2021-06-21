@@ -12,7 +12,6 @@ import VatRateItem from './VatRateItem';
 import './CalculateItem.scss';
 
 function AddItem({ onAddItem, isVisible, setIsVisible, onClick }) {
-  const [productName, setProductName] = useState('');
   const [enterNetAmount, setEnterNetAmount] = useState('');
   const [finalNetAmount, setFinalNetAmount] = useState('');
 
@@ -49,13 +48,11 @@ function AddItem({ onAddItem, isVisible, setIsVisible, onClick }) {
   // Reset input field to empty string after submitting the form
   useEffect(() => {
     if (!isVisible) {
-      setProductName('');
+      // setProductName('');
       setEnterNetAmount('');
       setFinalNetAmount('');
     }
   }, [isVisible]);
-
-  const enteredProductHandler = (e) => setProductName(e.target.value);
 
   const amountFromNetHandler = (e) => setEnterNetAmount(parseFloat(e.target.value));
 
@@ -87,7 +84,7 @@ function AddItem({ onAddItem, isVisible, setIsVisible, onClick }) {
         className: 'form',
         onSubmit: submitHandler,
       }}>
-      <AddProductName onChange={enteredProductHandler} value={productName} />
+      <AddProductName />
 
       {/* Section for adding source target of Net amount  */}
       <div style={{ display: 'inline-block' }}>
