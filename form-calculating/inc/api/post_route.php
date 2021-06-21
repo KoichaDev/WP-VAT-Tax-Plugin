@@ -30,7 +30,7 @@ function post_result($data) {
 
     wp_update_post([
         'ID'         => $post_id,
-        'post_title' => 'Form Calculation #' . $post_id
+        'post_title' => $data['product-name']
     ]);
 
     $post = [

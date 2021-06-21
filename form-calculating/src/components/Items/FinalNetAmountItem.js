@@ -1,9 +1,9 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext, forwardRef } from 'react';
 import ItemContext from './../../store/item-context';
 import Input from '../UI/Input';
 import './FinalNetAmountItem.scss';
 
-function FinalNetAmount() {
+function FinalNetAmount({}, ref) {
   const itemCtx = useContext(ItemContext);
 
   return (
@@ -13,6 +13,7 @@ function FinalNetAmount() {
         name: 'Final Net Amount',
       }}
       input={{
+        ref: ref,
         type: 'number',
         id: 'converted-input-currency',
         value: itemCtx.item.convertedNetAmount,
@@ -26,4 +27,4 @@ function FinalNetAmount() {
   );
 }
 
-export default FinalNetAmount;
+export default forwardRef(FinalNetAmount);

@@ -52,7 +52,6 @@ const defaultItemState = {
 
 function ItemProvider({ children }) {
   const [itemState, dispatchItemAction] = useReducer(itemReducer, defaultItemState);
-  console.log(itemState);
 
   const idHandler = ({ id }) => {
     dispatchItemAction({

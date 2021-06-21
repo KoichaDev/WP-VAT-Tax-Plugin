@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import {
   convertExchangePrice,
@@ -7,7 +7,7 @@ import {
   calculateTaxAmount,
 } from '../../calculate-items';
 import ItemContext from './../../store/item-context';
-import AddProductName from './AddProducItem';
+import AddProductName from './AddProducName';
 import AddNetAmountItem from './AddNetAmountItem';
 import AddCurrency from './AddCurrency';
 import currencies from '../../currencyExchange.json';
@@ -17,12 +17,15 @@ import Form from '../UI/Form';
 import VatRateItem from './VatRateItem';
 import './CalculateItem.scss';
 
-function AddItem({ onAddItem, isVisible, setIsVisible, onClick }) {
+function AddItem({ isVisible, onClick }) {
   const [selectedFromCurrency, setSelectedFromCurrency] = useState('nok');
   const [selectedToCurrency, setSelectedToCurrency] = useState('pln');
   const [currenciesExchange, setCurrenciesExchange] = useState([]);
 
   const itemCtx = useContext(ItemContext);
+  const addProductNameRef = useRef(null);
+  const addNetAmountItemRef = useRef(null);
+  const convertedNetAmountRef = useRef(null);
 
   const { enteredNetAmount, convertedNetAmount, vatRate } = itemCtx.item;
 
@@ -52,9 +55,10 @@ function AddItem({ onAddItem, isVisible, setIsVisible, onClick }) {
   // Reset input field to empty string after submitting the form
   useEffect(() => {
     if (!isVisible) {
-      // setProductName('');
-      // setEnterNetAmount('');
-      // setFinalNetAmount('');
+      // Using useRef might be an "edge" case, but in this case it's not DOM manipulating, but rather it's "reading" the input value
+      addProductNameRef.current.value = '';
+      addNetAmountItemRef.current.value = '';
+      convertedNetAmountRef.current.value = '';
     }
   }, [isVisible]);
 
@@ -84,11 +88,11 @@ function AddItem({ onAddItem, isVisible, setIsVisible, onClick }) {
         className: 'form',
         onSubmit: submitHandler,
       }}>
-      <AddProductName />
+      <AddProductName ref={addProductNameRef} />
 
       {/* Section for adding source target of Net amount  */}
       <div style={{ display: 'inline-block' }}>
-        <AddNetAmountItem />
+        <AddNetAmountItem ref={addNetAmountItemRef} />
 
         <AddCurrency
           label={{
@@ -111,7 +115,7 @@ function AddItem({ onAddItem, isVisible, setIsVisible, onClick }) {
 
       {/* Section for converting exchange from the source target of source Net amount  */}
       <div style={{ display: 'inline-block' }}>
-        <FinalNetAmount />
+        <FinalNetAmount ref={convertedNetAmountRef} />
 
         <AddCurrency
           label={{

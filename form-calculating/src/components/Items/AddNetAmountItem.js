@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, forwardRef } from 'react';
 import ItemContext from './../../store/item-context';
 import Input from '../UI/Input';
 
-function AddNetAmountItem() {
+function AddNetAmountItem({}, ref) {
   const [enteredNetAmount, setEnteredNetAmount] = useState('');
 
   const itemCtx = useContext(ItemContext);
@@ -20,6 +20,7 @@ function AddNetAmountItem() {
         name: 'Enter Net Amount',
       }}
       input={{
+        ref: ref,
         type: 'number',
         id: 'net-amount',
         value: enteredNetAmount,
@@ -35,4 +36,4 @@ function AddNetAmountItem() {
   );
 }
 
-export default AddNetAmountItem;
+export default forwardRef(AddNetAmountItem);
