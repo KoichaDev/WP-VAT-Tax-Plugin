@@ -50,6 +50,9 @@ const ModalOverlay = ({ closeModal, onAddNotification, setIsVisible, sendItemReq
       // Lifting up the state for notification Component
       onAddNotification(item);
       // Switching off the calculation register item modal
+
+      // Reset input field to empty string after submitting the form
+
       setIsVisible(false);
     });
   };

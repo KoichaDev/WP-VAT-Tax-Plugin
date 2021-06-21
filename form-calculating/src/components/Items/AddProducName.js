@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useContext, forwardRef } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import ItemContext from '../../store/item-context';
 import Input from '../UI/Input';
 import './AddProductItem.scss';
 
-function AddProductName({}, ref) {
+function AddProductName() {
   const [enteredProductName, setEnteredProductName] = useState('');
   const itemCtx = useContext(ItemContext);
 
@@ -20,7 +20,6 @@ function AddProductName({}, ref) {
         name: 'Product name',
       }}
       input={{
-        ref: ref,
         type: 'text',
         id: 'product-name',
         className: 'form__product-input',
@@ -33,4 +32,4 @@ function AddProductName({}, ref) {
   );
 }
 
-export default forwardRef(AddProductName);
+export default AddProductName;

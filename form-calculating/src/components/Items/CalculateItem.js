@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import {
   convertExchangePrice,
@@ -18,15 +18,12 @@ import Form from '../UI/Form';
 import VatRateItem from './VatRateItem';
 import './CalculateItem.scss';
 
-function AddItem({ isVisible, onClick }) {
+function AddItem({ onClick }) {
   const [selectedFromCurrency, setSelectedFromCurrency] = useState('nok');
   const [selectedToCurrency, setSelectedToCurrency] = useState('pln');
   const [currenciesExchange, setCurrenciesExchange] = useState([]);
 
   const itemCtx = useContext(ItemContext);
-  const addProductNameRef = useRef('');
-  const addNetAmountItemRef = useRef('');
-  const convertedNetAmountRef = useRef('');
 
   const { productName, enteredNetAmount, convertedNetAmount, vatRate } = itemCtx.item;
 
@@ -57,16 +54,6 @@ function AddItem({ isVisible, onClick }) {
     });
   }, [enteredNetAmount, selectedFromCurrency, selectedToCurrency]);
 
-  // Reset input field to empty string after submitting the form
-  useEffect(() => {
-    if (!isVisible) {
-      // Using useRef might be an "edge" case, but in this case it's not DOM manipulating, but rather it's "reading" the input value
-      addProductNameRef.current.value = '';
-      addNetAmountItemRef.current.value = '';
-      convertedNetAmountRef.current.value = '';
-    }
-  }, [isVisible]);
-
   const currencyFromHandler = (e) => setSelectedFromCurrency(e.target.value);
 
   const currencyToHandler = (e) => setSelectedToCurrency(e.target.value);
@@ -94,11 +81,11 @@ function AddItem({ isVisible, onClick }) {
         className: 'form',
         onSubmit: submitHandler,
       }}>
-      <AddProductName ref={addProductNameRef} />
+      <AddProductName />
 
       {/* Section for adding source target of Net amount  */}
       <div style={{ display: 'inline-block' }}>
-        <AddNetAmountItem ref={addNetAmountItemRef} />
+        <AddNetAmountItem />
 
         <AddCurrency
           label={{
@@ -121,7 +108,7 @@ function AddItem({ isVisible, onClick }) {
 
       {/* Section for converting exchange from the source target of source Net amount  */}
       <div style={{ display: 'inline-block' }}>
-        <FinalNetAmount ref={convertedNetAmountRef} />
+        <FinalNetAmount />
 
         <AddCurrency
           label={{

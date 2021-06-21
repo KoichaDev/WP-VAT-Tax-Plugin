@@ -55,7 +55,7 @@ function App() {
     <ItemProvider>
       {notificationContent}
       <h1>Calculate Tax and Vat</h1>
-      <CalculateItem isVisible={isVisible} onClick={calculateItemHandler} />
+      <CalculateItem onClick={calculateItemHandler} />
       {itemModalContent}
     </ItemProvider>
   );
