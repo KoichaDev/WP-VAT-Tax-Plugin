@@ -14,13 +14,13 @@ function post_result($data) {
     ]);
 
     $updated_fields['goods'] = [
-        'product_id'            => $data['id'],
-        'product_name'          => $data['product-name'],
-        'gross_product_price'   => $data['gross-price'],
-        'net_amount_price'      => $data['net-amount'],
-        'tax_amount'            => $data['tax-amount'],
-        'vat_rate'              => $data['vat-rate'],
-        'currency_type'         => $data['currency'],
+        'product_id'            => sanitize_text_field($data['id']),
+        'product_name'          => sanitize_text_field($data['product-name']),
+        'gross_product_price'   => sanitize_text_field($data['gross-price']),
+        'net_amount_price'      => sanitize_text_field($data['net-amount']),
+        'tax_amount'            => sanitize_text_field($data['tax-amount']),
+        'vat_rate'              => sanitize_text_field($data['vat-rate']),
+        'currency_type'         => sanitize_text_field($data['currency']),
 
     ];
 

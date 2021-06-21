@@ -1,5 +1,7 @@
 <?php
 
+// This is optional if we need to use this API for the serving it on as the front-end in WordPress 
+
 function get_route_api() {
 
     register_rest_route('cpt/v1', 'form-calculation', [
