@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import ItemContext from './../../store/item-context';
 import Input from '../UI/Input';
 
-function AddNetAmountItem({ value, onChange }) {
+function AddNetAmountItem() {
+  const [enteredNetAmount, setEnteredNetAmount] = useState('');
+
+  const itemCtx = useContext(ItemContext);
+
+  useEffect(() => {
+    itemCtx.enteredNetAmount({ enteredNetAmount });
+  }, [enteredNetAmount]);
+
+  const amountFromNetHandler = (e) => setEnteredNetAmount(parseFloat(e.target.value));
+
   return (
     <Input
       label={{
@@ -11,8 +22,8 @@ function AddNetAmountItem({ value, onChange }) {
       input={{
         type: 'number',
         id: 'net-amount',
-        value: value,
-        onChange: onChange,
+        value: enteredNetAmount,
+        onChange: amountFromNetHandler,
         placeholder: 'Add a number...',
         title: 'Your net amount to convert new exchange ',
         'aria-label': 'Net amount',

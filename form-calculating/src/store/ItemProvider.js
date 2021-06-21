@@ -3,31 +3,47 @@ import ItemContext from './item-context';
 
 const ACTION = {
   ENTERED_PRODUCT_NAME: 'entered-product-name',
+  ENTERED_NET_AMOUNT: 'entered-net-amount',
 };
 
 const itemReducer = (state, action) => {
   switch (action.type) {
     case ACTION.ENTERED_PRODUCT_NAME:
-      return { ...state, item: { productName: action.productName } };
+      return { ...state, productName: action.enteredProductName };
+    case ACTION.ENTERED_NET_AMOUNT:
+      return { ...state, enteredNetAmount: action.enteredNetAmount };
     default:
       return state;
   }
 };
 
-function ItemProvider({ children }) {
-  const [itemState, dispatchItemAction] = useReducer(itemReducer, { item: [] });
+const defaultItemState = {
+  productName: '',
+  enteredNetAmount: 0,
+};
 
-  const productNameHandler = ({ productName }) => {
+function ItemProvider({ children }) {
+  const [itemState, dispatchItemAction] = useReducer(itemReducer, defaultItemState);
+
+  const productNameHandler = ({ enteredProductName }) => {
     dispatchItemAction({
       type: ACTION.ENTERED_PRODUCT_NAME,
-      productName,
+      enteredProductName,
+    });
+  };
+
+  const netAmountPriceHandler = ({ enteredNetAmount }) => {
+    console.log(enteredNetAmount);
+    dispatchItemAction({
+      type: ACTION.ENTERED_NET_AMOUNT,
+      enteredNetAmount,
     });
   };
 
   const itemContext = {
-    item: itemState.item,
+    item: itemState,
     enteredProductName: productNameHandler,
-    enteredNetAmount: (netAmountValue) => {},
+    enteredNetAmount: netAmountPriceHandler,
     selectVatRate: (vatRateValue) => {},
     finalNetAmount: (finalNetAmountValue) => {},
     selectFromCurrency: (currency) => {},

@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { convertExchangePrice } from '../../calculate-items';
+import ItemContext from './../../store/item-context';
 import AddProductName from './AddProducItem';
 import AddNetAmountItem from './AddNetAmountItem';
 import AddCurrency from './AddCurrency';
@@ -12,7 +13,6 @@ import VatRateItem from './VatRateItem';
 import './CalculateItem.scss';
 
 function AddItem({ onAddItem, isVisible, setIsVisible, onClick }) {
-  const [enterNetAmount, setEnterNetAmount] = useState('');
   const [finalNetAmount, setFinalNetAmount] = useState('');
 
   const [selectedFromCurrency, setSelectedFromCurrency] = useState('nok');
@@ -20,6 +20,10 @@ function AddItem({ onAddItem, isVisible, setIsVisible, onClick }) {
   const [currenciesExchange, setCurrenciesExchange] = useState([]);
 
   const [vatRate, setVatRate] = useState(25);
+
+  const { enteredNetAmount } = useContext(ItemContext).item;
+
+  // const {} = itemCtx.item;
 
   // Looping through to get currencies Exhange from json file
   useEffect(() => {
@@ -38,23 +42,21 @@ function AddItem({ onAddItem, isVisible, setIsVisible, onClick }) {
       if (selectedFromCurrency === currency) {
         // Targeting the currency to exchange from nok to pln for example
         const targetNewCurrency = priceExchange[selectedToCurrency];
-        const newTargetValue = convertExchangePrice(enterNetAmount, targetNewCurrency);
+        const newTargetValue = convertExchangePrice(enteredNetAmount, targetNewCurrency);
 
         setFinalNetAmount(newTargetValue);
       }
     });
-  }, [enterNetAmount, selectedFromCurrency, selectedToCurrency]);
+  }, [enteredNetAmount, selectedFromCurrency, selectedToCurrency]);
 
   // Reset input field to empty string after submitting the form
   useEffect(() => {
     if (!isVisible) {
       // setProductName('');
-      setEnterNetAmount('');
+      // setEnterNetAmount('');
       setFinalNetAmount('');
     }
   }, [isVisible]);
-
-  const amountFromNetHandler = (e) => setEnterNetAmount(parseFloat(e.target.value));
 
   const amountToNetHandler = (e) => setFinalNetAmount(parseFloat(e.target.value));
 
@@ -88,7 +90,7 @@ function AddItem({ onAddItem, isVisible, setIsVisible, onClick }) {
 
       {/* Section for adding source target of Net amount  */}
       <div style={{ display: 'inline-block' }}>
-        <AddNetAmountItem value={enterNetAmount} onChange={amountFromNetHandler} />
+        <AddNetAmountItem />
 
         <AddCurrency
           label={{

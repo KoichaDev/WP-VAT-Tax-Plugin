@@ -4,14 +4,14 @@ import Input from './../UI/Input';
 import './AddProductItem.scss';
 
 function AddProductName() {
-  const [productName, setProductName] = useState('');
+  const [enteredProductName, setEnteredProductName] = useState('');
   const itemCtx = useContext(ItemContext);
 
   useEffect(() => {
-    itemCtx.enteredProductName({ productName });
-  }, [productName]);
+    itemCtx.enteredProductName({ enteredProductName });
+  }, [enteredProductName]);
 
-  const enteredProductHandler = (e) => setProductName(e.target.value);
+  const enteredProductHandler = (e) => setEnteredProductName(e.target.value);
 
   return (
     <Input
@@ -24,7 +24,7 @@ function AddProductName() {
         id: 'product-name',
         className: 'form__product-input',
         placeholder: 'Enter a product name',
-        value: productName,
+        value: enteredProductName,
         onChange: enteredProductHandler,
         required: 'required',
       }}
