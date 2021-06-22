@@ -10,7 +10,7 @@ function LoadingIcon({ className }) {
       viewBox='0 0 100 100'
       preserveAspectRatio='xMidYMid'
       className={className}>
-      <circle cx='50' cy='50' r='0' fill='none' stroke='#fff' stroke-width='2'>
+      <circle cx='50' cy='50' r='0' fill='none' stroke='#fff' strokeWidth='2'>
         <animate
           attributeName='r'
           repeatCount='indefinite'
@@ -30,7 +30,7 @@ function LoadingIcon({ className }) {
           calcMode='spline'
           begin='0s'></animate>
       </circle>
-      <circle cx='50' cy='50' r='0' fill='none' stroke='#667395' stroke-width='2'>
+      <circle cx='50' cy='50' r='0' fill='none' stroke='#667395' strokeWidth='2'>
         <animate
           attributeName='r'
           repeatCount='indefinite'
