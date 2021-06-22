@@ -7,7 +7,7 @@ import CalculateItem from './components/Items/CalculateItem';
 import LoadingIcon from './components/Icons/LoadingIcon';
 import Notification from './components/UI/Notification';
 import RegisterItem from './components/Items/RegisterItem';
-import './Form.scss';
+import './App.scss';
 
 function App() {
   const { isLoading, error, sendRequest: sendItemRequest } = useHttp();
@@ -52,7 +52,16 @@ function App() {
   let backdropContent = '';
 
   if (backdropIsVisible) {
-    backdropContent = <>{createPortal(<Backdrop />, document.getElementById('backdrop-portal'))}</>;
+    backdropContent = (
+      <>
+        {createPortal(
+          <Backdrop>
+            <LoadingIcon className='loading-animation' />
+          </Backdrop>,
+          document.getElementById('backdrop-portal')
+        )}
+      </>
+    );
   }
 
   if (isVisible) {

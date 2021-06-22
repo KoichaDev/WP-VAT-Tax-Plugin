@@ -1,15 +1,16 @@
 import React from 'react';
 
-function LoadingIcon() {
+function LoadingIcon({ className }) {
   return (
     <svg
-      width='200px'
-      height='200px'
+      width='50px'
+      height='50px'
       xmlns='http://www.w3.org/2000/svg'
-      style={{ margin: 'auto', background: 'rgb(241, 242, 243)', display: 'block', shapeRendering: 'auto' }}
+      style={{ margin: 'auto', background: 'transparent', display: 'block', shapeRendering: 'auto' }}
       viewBox='0 0 100 100'
-      preserveAspectRatio='xMidYMid'>
-      <circle cx='50' cy='50' r='0' fill='none' stroke='#292664' stroke-width='2'>
+      preserveAspectRatio='xMidYMid'
+      className={className}>
+      <circle cx='50' cy='50' r='0' fill='none' stroke='#fff' stroke-width='2'>
         <animate
           attributeName='r'
           repeatCount='indefinite'
