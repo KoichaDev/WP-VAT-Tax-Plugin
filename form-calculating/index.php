@@ -26,16 +26,16 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-include_once('backend/inc/api/get_route.php');
+include_once('backend/api/get_route.php');
 
-include_once('backend/inc/api/post_route.php');
+include_once('backend/api/post_route.php');
 
-include_once('backend/inc/custom-post-types/form-tax-vat-calculation.php');
+include_once('backend/custom-post-types/form-tax-vat-calculation.php');
 
-include_once('backend/inc/enqueue-style-and-scripts/enqueue-script-and-styles.php');
+include_once('backend/enqueue-style-and-scripts/enqueue-script-and-styles.php');
 
-include_once('backend/inc/menu-dashboard/menu-dashboard.php');
+include_once('backend/menu-dashboard/menu-dashboard.php');
 
-include_once('backend/inc/rewrite-rules/custom-rewrite-rules.php');
+include_once('backend/rewrite-rules/custom-rewrite-rules.php');
 
-include_once('backend/inc/shortcode/react-shortcode-calculator.php');
+include_once('backend/shortcode/react-shortcode-calculator.php');

@@ -4,8 +4,8 @@ if (!function_exists('gs_enqueue_script_and_styles')) {
 
     function gs_enqueue_script_and_styles() {
         if (basename($_SERVER['REQUEST_URI']) === 'admin.php?page=calculate_tax_vat') {
-            $file_to_js = dirname(plugin_dir_url(__DIR__), 2) . '/frontend/dist/index.js';
-            $file_to_css = dirname(plugin_dir_url(__DIR__), 2) . '/frontend/dist/index.css';
+            $file_to_js = dirname(plugin_dir_url(__DIR__), 1) . '/frontend/dist/index.js';
+            $file_to_css = dirname(plugin_dir_url(__DIR__), 1) . '/frontend/dist/index.css';
 
             $file_version = round(microtime(true), 0);
 
