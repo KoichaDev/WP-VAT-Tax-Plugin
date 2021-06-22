@@ -1,5 +1,3 @@
-# Godt Sagt AS Assignment
-
 
 
 ## 📝 Task Assignment:
@@ -41,9 +39,11 @@ This repo contains Advanced Custom Fields and my custom plugin I created for thi
 
 
 
-### 2. Import Advanced Custom Fields .json file
+### 2. Import Advanced Custom Fields .json file (Optional)
 
-The file of this project includes `acf-export-form-tax-vat-calculation.json` file. This json file contains all the custom field is used for this project.  
+This is ***optional*** just in case If you can't see the custom fields being added automatically to our custom post type. 
+
+I have attached a`back-up-acf-export-form-tax-vat-calculation_fields` file we can use to import into Advanced Custom Fields (ACF) as a back up in case doesn't auto load all the fields automatically.   
 
 
 
@@ -85,7 +85,7 @@ Install dependency
 npm install
 ```
 
-If you use yarn:
+or If you use yarn:
 
 ```
 yarn install
