@@ -35,7 +35,7 @@
 cd wp-content/plugin/[copy-the-plugin-here]
 ```
 
-This repo contains Advanced Custom Fields and my custom plugin I created for this assignment 
+This repo contains Advanced Custom Fields and custom plugin that has been created for this assignment. 
 
 
 
