@@ -26,6 +26,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+include_once('backend/acf-local-json/acf-local-json.php');
+
 include_once('backend/api/get_route.php');
 
 include_once('backend/api/post_route.php');
