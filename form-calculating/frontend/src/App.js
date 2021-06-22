@@ -1,18 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import ReactDOM, { createPortal } from 'react-dom';
 import ItemProvider from './store/ItemProvider';
 import useHttp from './hooks/use-http';
+import Backdrop from './components/UI/Backdrop';
 import CalculateItem from './components/Items/CalculateItem';
+import LoadingIcon from './components/Icons/LoadingIcon';
 import Notification from './components/UI/Notification';
 import RegisterItem from './components/Items/RegisterItem';
 import './Form.scss';
 
 function App() {
   const { isLoading, error, sendRequest: sendItemRequest } = useHttp();
-
   const [notificationContent, setNotificationContent] = useState(null);
   const [isVisible, setIsVisible] = useState(isLoading);
+  const [backdropIsVisible, setBackdropIsVisible] = useState(false);
 
   const calculateItemHandler = () => setIsVisible((prevIsVisible) => !prevIsVisible);
+
+  // Triggering the backdrop visibility as soon user click to calculate the item
+  useEffect(() => {
+    if (isVisible) {
+      setBackdropIsVisible(true);
+    }
+  }, [isVisible]);
 
   // This handler will be used to notify the user that post has been updated
   const notificationHandler = (item) => {
@@ -29,6 +39,7 @@ function App() {
     }
 
     setNotificationContent(() => {
+      setBackdropIsVisible(false);
       return (
         <Notification onClick={closeNotificationHandler} error={error}>
           {notificationMessage}
@@ -37,13 +48,17 @@ function App() {
     });
   };
 
-  let itemModalContent = '';
+  let registerModalContent = '';
+  let backdropContent = '';
+
+  if (backdropIsVisible) {
+    backdropContent = <>{createPortal(<Backdrop />, document.getElementById('backdrop-portal'))}</>;
+  }
 
   if (isVisible) {
-    itemModalContent = (
+    registerModalContent = (
       <RegisterItem
-        closeModal={calculateItemHandler}
-        isVisible={isVisible}
+        setBackdropIsVisible={setBackdropIsVisible}
         setIsVisible={setIsVisible}
         sendItemRequest={sendItemRequest}
         onAddNotification={notificationHandler}
@@ -53,10 +68,11 @@ function App() {
 
   return (
     <ItemProvider>
+      {backdropContent}
       {notificationContent}
-      <h1>Calculate Tax and Vat</h1>
+      <h1>Calculate Product Price </h1>
       <CalculateItem onClick={calculateItemHandler} />
-      {itemModalContent}
+      {registerModalContent}
     </ItemProvider>
   );
 }

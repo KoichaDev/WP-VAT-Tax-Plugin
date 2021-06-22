@@ -7,8 +7,8 @@ if (!function_exists('gs_react_shortcode_calculator')) {
         // instead of adding it inside nested div elements 
         return '
     <div>
-        <div id="backdrop-root"></div>
-        <div id="modal-overlay-root"></div>
+        <div id="backdrop-portal"></div>
+        <div id="register-item-portal"></div>
         <div id="cost-calculator-root"></div>
     </div>';
     }

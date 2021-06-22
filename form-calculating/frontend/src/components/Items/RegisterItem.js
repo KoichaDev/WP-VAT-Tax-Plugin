@@ -1,29 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import ReactDOM, { createPortal } from 'react-dom';
 import ItemContext from '../../store/item-context';
+import LoadingIcon from './../Icons/LoadingIcon';
 import Button from '../UI/Button';
 import './RegisterItem.scss';
 
-const Backdrop = ({ closeModal, onCloseExit }) => {
-  const exitModalHandler = (e) => {
-    const escKey = e.keyCode === 27;
-
-    if (escKey) {
-      onCloseExit;
-    }
-  };
-
-  return (
-    <div
-      role='backdrop-overlay'
-      aria-label='Backdrop'
-      className='backdrop'
-      onClick={closeModal}
-      onKeyDown={exitModalHandler}></div>
-  );
-};
-
-const ModalOverlay = ({ closeModal, onAddNotification, setIsVisible, sendItemRequest }) => {
+const RegisterItemOverlay = ({ onAddNotification, setBackdropIsVisible, setIsVisible, sendItemRequest }) => {
   const itemCtx = useContext(ItemContext);
 
   const sendRequestHandler = async (props) => {
@@ -48,60 +30,48 @@ const ModalOverlay = ({ closeModal, onAddNotification, setIsVisible, sendItemReq
     sentItem.then((item) => {
       // Lifting up the state for notification Component
       onAddNotification(item);
-      // Reset input field to empty string after submitting the form
-      const enteredProductName = productName.replace(productName, '');
-      itemCtx.setEnteredProductName({ enteredProductName });
-
-      // Switching off the calculation register item modal
-      setIsVisible(false);
     });
+
+    // Switching off the calculation register item modal after submitting the POST HTTP Request
+    setIsVisible(false);
   };
 
-  const {
-    productName,
-    enteredNetAmount,
-    convertedNetAmount,
-    fromCurrency,
-    toCurrency,
-    grossProductPrice,
-    netProductPrice,
-    taxAmount,
-    vatRate,
-  } = itemCtx.item;
+  const closeModalHandler = () => {
+    setBackdropIsVisible(false);
+    setIsVisible(false);
+  };
 
-  let calculatedContent = '';
-
-  calculatedContent = (
+  return (
     <form className='modal' onSubmit={(e) => e.preventDefault()}>
       <article>
         <header>
           <h2>🧾 Information</h2>
         </header>
         <p>
-          <strong>Product Name:</strong> {productName}
+          <strong>Product Name:</strong> {itemCtx.item.productName}
         </p>
         <p>
           <strong>Entered Net Amount: </strong>
-          {enteredNetAmount} {fromCurrency.toUpperCase()}
+          {itemCtx.item.enteredNetAmount} {itemCtx.item.fromCurrency.toUpperCase()}
         </p>
         <p>
           <strong>Converted Net amount: </strong>
-          {convertedNetAmount} {toCurrency.toUpperCase()}
+          {itemCtx.item.convertedNetAmount} {itemCtx.item.toCurrency.toUpperCase()}
         </p>
         <p>
-          <strong>Vat Rate: </strong> {vatRate}%
+          <strong>Vat Rate: </strong> {itemCtx.item.vatRate}%
         </p>
         <p>
           <strong>Gross Price is: </strong>
-          {grossProductPrice} {toCurrency.toUpperCase()}
+          {itemCtx.item.grossProductPrice} {itemCtx.item.toCurrency.toUpperCase()}
         </p>
         <p>
           <strong>Net product price is: </strong>
-          {netProductPrice} {toCurrency.toUpperCase()}
+          {itemCtx.item.netProductPrice} {itemCtx.item.toCurrency.toUpperCase()}
         </p>
         <p>
           <strong> Tax Amount is: </strong>
-          {taxAmount} {toCurrency.toUpperCase()}
+          {itemCtx.item.taxAmount} {itemCtx.item.toCurrency.toUpperCase()}
         </p>
 
         <footer className='modal__footer'>
@@ -115,7 +85,7 @@ const ModalOverlay = ({ closeModal, onAddNotification, setIsVisible, sendItemReq
           </Button>
           <Button
             button={{
-              onClick: closeModal,
+              onClick: closeModalHandler,
               className: 'btn btn--warning',
             }}>
             <strong>❌ CANCEL </strong>
@@ -124,48 +94,27 @@ const ModalOverlay = ({ closeModal, onAddNotification, setIsVisible, sendItemReq
       </article>
     </form>
   );
-
-  return <>{calculatedContent}</>;
 };
 
 const RegisterItem = ({
-  closeModal,
-  isVisible,
   onAddNotification,
+  setBackdropIsVisible,
   setIsVisible,
   sendItemRequest,
   ...props
 }) => {
-  let backDropContent = '';
-  let modalOverlayContent = '';
-
-  if (isVisible) {
-    backDropContent = (
-      <>{createPortal(<Backdrop closeModal={closeModal} />, document.getElementById('backdrop-root'))}</>
-    );
-  }
-
-  if (isVisible) {
-    modalOverlayContent = (
-      <>
-        {createPortal(
-          <ModalOverlay
-            {...props}
-            onAddNotification={onAddNotification}
-            sendItemRequest={sendItemRequest}
-            setIsVisible={setIsVisible}
-            closeModal={closeModal}
-          />,
-          document.getElementById('modal-overlay-root')
-        )}
-      </>
-    );
-  }
-
   return (
     <>
-      {backDropContent}
-      {modalOverlayContent}
+      {createPortal(
+        <RegisterItemOverlay
+          setBackdropIsVisible={setBackdropIsVisible}
+          onAddNotification={onAddNotification}
+          sendItemRequest={sendItemRequest}
+          setIsVisible={setIsVisible}
+          {...props}
+        />,
+        document.getElementById('register-item-portal')
+      )}
     </>
   );
 };
